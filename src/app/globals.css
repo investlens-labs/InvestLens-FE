@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-brand-50: #eefbf6;
+  --color-brand-100: #d7f4e8;
+  --color-brand-500: #138966;
+  --color-brand-600: #0b6b4f;
+  --color-brand-700: #095640;
+  --color-ink-950: #101816;
+  --radius-card: 0.75rem;
+}
+
+:root { color-scheme: light; }
+:root.dark { color-scheme: dark; }
+
+* { border-color: currentColor; }
+html { font-size: 14px; }
+body {
+  margin: 0;
+  background: #f6f8f7;
+  color: #18201e;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.dark body { background: #0d1211; color: #e9efed; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #138966; outline-offset: 2px; }
+::selection { background: #bcebdc; color: #073f30; }
+
+@layer components {
+  .surface { @apply rounded-card border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900; }
+  .field { @apply h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100; }
+  .label { @apply mb-1.5 block text-[13px] font-semibold text-slate-700 dark:text-slate-300; }
+}
