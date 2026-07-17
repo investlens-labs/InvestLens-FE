@@ -6,6 +6,7 @@ export const queryKeys = {
   instruments: (query: string, market?: string, type?: string, limit = 50) => ['instruments', query, market, type, limit] as const,
   instrumentDetail: (id: string) => ['instruments', 'detail', id] as const,
   instrumentChart: (id: string, range: string) => ['instruments', 'chart', id, range] as const,
+  instrumentNews: (id: string, page: number, size: number) => ['instruments', 'news', id, page, size] as const,
   news: (filters: NewsFilters) => ['news', filters] as const,
   newsDetail: (id: string) => ['news', id] as const,
 }

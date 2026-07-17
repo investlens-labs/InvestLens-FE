@@ -5,6 +5,7 @@ import type {
   FeedItem,
   Instrument,
   InstrumentChart,
+  InstrumentNewsParams,
   InstrumentSearchParams,
   LoginRequest,
   NewsDetail,
@@ -37,6 +38,8 @@ export const instrumentApi = {
   get: (instrumentId: string) => apiClient.get<Instrument>(`/instruments/${instrumentId}`),
   chart: (instrumentId: string, range: ChartRange) =>
     apiClient.get<InstrumentChart>(`/instruments/${instrumentId}/chart${toQuery({ range })}`),
+  news: (instrumentId: string, { page = 0, size = 20 }: InstrumentNewsParams = {}) =>
+    apiClient.get<PageResponse<FeedItem>>(`/instruments/${instrumentId}/news${toQuery({ page, size })}`, { timeoutMs: 160_000 }),
 }
 
 export const portfolioApi = {

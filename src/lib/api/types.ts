@@ -83,10 +83,11 @@ export interface Impact {
 export interface FeedItem {
   id: string
   source: string
+  originalUrl: string
   title: string
-  translatedTitle: string
-  summary: string
-  marketContext: string
+  translatedTitle: string | null
+  summary: string | null
+  marketContext: string | null
   analysisStatus: AnalysisStatus
   publishedAt: string
   impacts: Impact[]
@@ -124,6 +125,11 @@ export interface PageResponse<T> {
 export interface NewsFilters {
   direction?: ImpactDirection
   minScore?: number
+  page?: number
+  size?: number
+}
+
+export interface InstrumentNewsParams {
   page?: number
   size?: number
 }

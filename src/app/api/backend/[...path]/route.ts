@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { createProxyResponse } from '@/lib/api/proxy-response'
+import { getUpstreamTimeout } from '@/lib/api/proxy-timeout'
 
 const BACKEND_API_URL = process.env.INVESTLENS_API_BASE_URL ?? 'https://investlens-be.onrender.com/api/v1'
 const ALLOWED_METHODS = new Set(['GET', 'POST', 'DELETE'])
@@ -11,6 +12,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
 
   const { path } = await context.params
   const upstreamUrl = new URL(`${BACKEND_API_URL}/${path.map(encodeURIComponent).join('/')}`)
+  const upstreamTimeout = getUpstreamTimeout(path)
   request.nextUrl.searchParams.forEach((value, key) => upstreamUrl.searchParams.append(key, value))
 
   const headers = new Headers({ Accept: 'application/json' })
@@ -25,7 +27,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
       headers,
       body: request.method === 'POST' ? await request.text() : undefined,
       cache: 'no-store',
-      signal: AbortSignal.timeout(50_000),
+      signal: AbortSignal.timeout(upstreamTimeout),
     })
     const responseHeaders = new Headers()
     const upstreamContentType = response.headers.get('content-type')

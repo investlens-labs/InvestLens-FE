@@ -24,4 +24,12 @@ describe('instrumentApi', () => {
 
     expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/chart?range=3M')
   })
+
+  it('종목 ID와 페이지 정보로 관련 뉴스 경로를 생성한다', async () => {
+    const get = vi.spyOn(apiClient, 'get').mockResolvedValue({})
+
+    await instrumentApi.news('instrument-uuid', { page: 2, size: 20 })
+
+    expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/news?page=2&size=20', { timeoutMs: 160_000 })
+  })
 })

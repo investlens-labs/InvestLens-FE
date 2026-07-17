@@ -1,13 +1,14 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, BarChart3, Check, Globe2, Plus, Tag } from 'lucide-react'
+import { ArrowLeft, BarChart3, Globe2, Plus, Tag, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { Button } from '@/components/ui/button'
 import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { InstrumentChart } from '@/components/instrument-chart'
+import { InstrumentNews } from '@/components/instrument-news'
 import { ApiError } from '@/lib/api/client'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
 import { queryKeys } from '@/lib/query-keys'
@@ -21,13 +22,15 @@ export default function InstrumentDetailPage() {
     enabled: Boolean(instrumentId),
   })
   const portfolio = useQuery({ queryKey: queryKeys.portfolio, queryFn: portfolioApi.list })
+  const refreshPortfolioData = () => {
+    void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio })
+    void queryClient.invalidateQueries({ queryKey: ['news'] })
+  }
   const addMutation = useMutation({
     mutationFn: portfolioApi.add,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio })
-      void queryClient.invalidateQueries({ queryKey: ['news'] })
-    },
+    onSuccess: refreshPortfolioData,
   })
+  const removeMutation = useMutation({ mutationFn: portfolioApi.remove, onSuccess: refreshPortfolioData })
 
   if (instrument.isLoading) return <LoadingState label="종목 상세 정보를 불러오는 중입니다." />
   if (instrument.error instanceof ApiError && instrument.error.status === 404) {
@@ -37,7 +40,9 @@ export default function InstrumentDetailPage() {
   if (!instrument.data) return null
 
   const data = instrument.data
-  const isAdded = portfolio.data?.some((item) => item.instrumentId === data.id) ?? false
+  const portfolioItem = portfolio.data?.find((item) => item.instrumentId === data.id)
+  const isAdded = Boolean(portfolioItem)
+  const portfolioPending = addMutation.isPending || removeMutation.isPending
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -69,11 +74,12 @@ export default function InstrumentDetailPage() {
         <aside className="surface p-4 lg:sticky lg:top-20">
           <h2 className="text-sm font-semibold text-slate-950 dark:text-white">포트폴리오</h2>
           <p className="mt-1 text-xs leading-5 text-slate-500">등록하면 이 종목과 관련된 뉴스 영향 분석을 맞춤 피드에서 확인할 수 있습니다.</p>
-          <Button className="mt-4 w-full" variant={isAdded ? 'secondary' : 'primary'} icon={isAdded ? Check : Plus} disabled={isAdded || portfolio.isLoading} loading={addMutation.isPending} onClick={() => addMutation.mutate({ instrumentId: data.id })}>{isAdded ? '포트폴리오에 등록됨' : '포트폴리오에 추가'}</Button>
-          {addMutation.isError && <p role="alert" className="mt-2 text-xs text-red-600">종목을 추가하지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
+          <Button className="mt-4 w-full" variant={isAdded ? 'danger' : 'primary'} icon={isAdded ? Trash2 : Plus} disabled={portfolio.isLoading || portfolioPending} loading={portfolioPending} onClick={() => portfolioItem ? removeMutation.mutate(portfolioItem.id) : addMutation.mutate({ instrumentId: data.id })}>{isAdded ? '포트폴리오에서 삭제' : '포트폴리오에 추가'}</Button>
+          {(addMutation.isError || removeMutation.isError) && <p role="alert" className="mt-2 text-xs text-red-600">포트폴리오를 변경하지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
           <Link href="/dashboard" className="mt-2 inline-flex h-9 w-full items-center justify-center rounded-lg text-xs font-semibold text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-700/10">맞춤 뉴스 확인</Link>
         </aside>
       </div>
+      <InstrumentNews key={data.id} instrumentId={data.id} ticker={data.ticker} />
       <div className="mt-4 text-right"><LogoAttribution url={data.logoAttributionUrl} /></div>
     </div>
   )
