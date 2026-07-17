@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+import { createProxyResponse } from '@/lib/api/proxy-response'
 
 const BACKEND_API_URL = process.env.INVESTLENS_API_BASE_URL ?? 'https://investlens-be.onrender.com/api/v1'
 const ALLOWED_METHODS = new Set(['GET', 'POST', 'DELETE'])
@@ -22,14 +23,14 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     const response = await fetch(upstreamUrl, {
       method: request.method,
       headers,
-      body: request.method === 'GET' ? undefined : await request.text(),
+      body: request.method === 'POST' ? await request.text() : undefined,
       cache: 'no-store',
       signal: AbortSignal.timeout(50_000),
     })
     const responseHeaders = new Headers()
     const upstreamContentType = response.headers.get('content-type')
     if (upstreamContentType) responseHeaders.set('Content-Type', upstreamContentType)
-    return new Response(await response.arrayBuffer(), { status: response.status, headers: responseHeaders })
+    return createProxyResponse(response, responseHeaders)
   } catch (error) {
     const message = error instanceof DOMException && error.name === 'TimeoutError'
       ? '백엔드 서버 응답이 지연되고 있습니다.'

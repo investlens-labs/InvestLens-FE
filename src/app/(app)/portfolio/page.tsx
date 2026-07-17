@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Plus, Trash2 } from 'lucide-react'
+import { LoaderCircle, Plus, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
@@ -33,12 +33,20 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-[90px_minmax(0,1fr)_80px_130px_64px] border-b border-slate-100 px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-400 max-md:hidden dark:border-slate-800"><span>티커</span><span>종목명</span><span>유형</span><span>등록일</span><span className="text-right">삭제</span></div>
             <ul className="divide-y divide-slate-100 dark:divide-slate-800">
               {portfolio.data.map((item) => (
-                <li key={item.id} className="grid items-center gap-2 px-4 py-3 md:grid-cols-[90px_minmax(0,1fr)_80px_130px_64px]">
+                <li key={item.id} className="grid grid-cols-[72px_minmax(0,1fr)_40px] items-center gap-3 px-4 py-3 md:grid-cols-[90px_minmax(0,1fr)_80px_130px_64px] md:gap-2">
                   <strong className="font-mono text-sm text-slate-950 dark:text-white">{item.ticker}</strong>
-                  <span className="truncate text-sm text-slate-700 dark:text-slate-300">{item.companyName}</span>
-                  <span className="w-fit rounded bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{item.type}</span>
-                  <span className="text-xs text-slate-500">{formatDate(item.createdAt)}</span>
-                  <Button aria-label={`${item.ticker} 삭제`} variant="danger" className="h-9 w-9 justify-self-start px-0 md:justify-self-end" loading={removeMutation.isPending && removeMutation.variables === item.id} disabled={removeMutation.isPending} onClick={() => removeMutation.mutate(item.id)}><Trash2 className="size-4" /></Button>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm text-slate-700 dark:text-slate-300">{item.companyName}</span>
+                    <span className="mt-0.5 flex items-center gap-1.5 text-[11px] text-slate-500 md:hidden"><span>{item.type}</span><span aria-hidden>·</span><span>{formatDate(item.createdAt)}</span></span>
+                  </span>
+                  <span className="hidden w-fit rounded bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-600 md:block dark:bg-slate-800 dark:text-slate-300">{item.type}</span>
+                  <span className="hidden text-xs text-slate-500 md:block">{formatDate(item.createdAt)}</span>
+                  <DeleteButton
+                    ticker={item.ticker}
+                    pending={removeMutation.isPending && removeMutation.variables === item.id}
+                    disabled={removeMutation.isPending}
+                    onClick={() => removeMutation.mutate(item.id)}
+                  />
                 </li>
               ))}
             </ul>
@@ -46,5 +54,21 @@ export default function PortfolioPage() {
         )}
       {removeMutation.isError && <p role="alert" className="mt-3 text-sm text-red-600">종목을 삭제하지 못했습니다. 다시 시도해 주세요.</p>}
     </>
+  )
+}
+
+function DeleteButton({ ticker, pending, disabled, onClick }: { ticker: string; pending: boolean; disabled: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label={pending ? `${ticker} 삭제 중` : `${ticker} 삭제`}
+      aria-busy={pending}
+      title={pending ? '삭제 중' : '포트폴리오에서 삭제'}
+      disabled={disabled}
+      onClick={onClick}
+      className="grid size-9 justify-self-end place-items-center rounded-lg border border-transparent text-slate-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:border-red-900 dark:hover:bg-red-950/50 dark:hover:text-red-400"
+    >
+      {pending ? <LoaderCircle aria-hidden className="size-4 animate-spin" /> : <Trash2 aria-hidden className="size-4" />}
+    </button>
   )
 }
