@@ -323,12 +323,63 @@ npm run lint
 npm run typecheck
 npm run test
 npm run build
+npm run build:cloudflare
 git diff --check
 ```
 
-완료 기준은 lint 오류 0건, TypeScript 오류 0건, 전체 테스트 통과, production build 성공, whitespace 오류 없음입니다.
+완료 기준은 lint 오류 0건, TypeScript 오류 0건, 전체 테스트 통과, Next.js production build와 OpenNext Worker build 성공, whitespace 오류 없음입니다.
 
-## 18. 유지보수 가이드
+## 18. Cloudflare Workers 배포
+
+이 프로젝트는 SSR과 Next.js Route Handler를 사용하므로 정적 Pages가 아니라 Cloudflare Workers에 배포합니다. `@opennextjs/cloudflare`가 Next.js 빌드 결과를 Worker 번들로 변환하고 Wrangler가 이를 업로드합니다.
+
+### 저장소 설정
+
+- Worker 이름: `investlens`
+- Worker 진입점: `.open-next/worker.js`
+- 정적 자산: `.open-next/assets`
+- Node.js 호환성: `nodejs_compat`
+- 설정 파일: `wrangler.jsonc`
+- OpenNext 설정: `open-next.config.ts`
+
+`wrangler.jsonc`에 공개 가능한 기본 API 주소가 포함되어 있습니다. 비밀 값이 추가되는 경우 파일에 직접 작성하지 않고 Cloudflare의 Variables and Secrets에서 관리합니다.
+
+### Cloudflare Workers Builds
+
+GitHub 저장소 연결 화면에서 다음 값을 사용합니다.
+
+```text
+Project name:   investlens
+Build command:  npm run build:cloudflare
+Deploy command: npx @opennextjs/cloudflare deploy
+```
+
+main 브랜치의 변경이 배포 대상입니다. Build Variables and secrets에는 필요에 따라 다음 값을 등록할 수 있습니다.
+
+```text
+INVESTLENS_API_BASE_URL=https://investlens-be.onrender.com/api/v1
+NEXT_PUBLIC_API_BASE_URL=/api/backend
+```
+
+동일한 기본값이 `wrangler.jsonc`에도 있어 별도 변수를 등록하지 않아도 현재 백엔드로 연결됩니다.
+
+### 로컬 Worker 검증
+
+```bash
+cp .dev.vars.example .dev.vars
+npm run preview
+```
+
+`preview`는 Next.js 개발 서버가 아니라 Cloudflare의 `workerd` 런타임에서 실행되므로 실제 배포 환경에 가까운 검증에 사용합니다.
+
+실제 배포 전 패키지만 검사하려면 다음 명령을 사용합니다.
+
+```bash
+npm run build:cloudflare
+npx wrangler deploy --dry-run
+```
+
+## 19. 유지보수 가이드
 
 ### API가 변경된 경우
 

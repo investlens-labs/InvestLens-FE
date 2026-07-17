@@ -26,6 +26,25 @@ npm run dev
 
 서버 프록시의 기본 업스트림은 `https://investlens-be.onrender.com/api/v1`이며 `INVESTLENS_API_BASE_URL`로 변경할 수 있습니다. 브라우저는 CORS 영향을 피하기 위해 기본적으로 동일 출처 `/api/backend`를 호출합니다.
 
+## Cloudflare Workers 배포
+
+프로젝트는 OpenNext 어댑터와 Wrangler를 통해 `investlens` Worker로 배포됩니다.
+
+```bash
+npm run build:cloudflare
+npm run preview
+npm run deploy
+```
+
+Cloudflare Workers Builds에서는 다음 명령을 사용합니다.
+
+```text
+Build command:  npm run build:cloudflare
+Deploy command: npx @opennextjs/cloudflare deploy
+```
+
+환경 변수와 호환성 설정은 `wrangler.jsonc`, OpenNext 설정은 `open-next.config.ts`에서 관리합니다.
+
 ## 품질 검증
 
 ```bash
