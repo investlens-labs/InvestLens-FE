@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="group absolute bottom-4 left-3 z-10">
-          <button type="button" aria-label="뉴스 분석 안내" aria-describedby="investment-disclaimer" className="grid size-9 place-items-center rounded-full border border-slate-200 bg-slate-50 text-slate-500 shadow-sm transition hover:border-brand-500/40 hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-brand-700/15 dark:hover:text-brand-100 dark:focus-visible:ring-offset-slate-950">
+          <button type="button" aria-label="뉴스 분석 안내" aria-describedby="investment-disclaimer" className="grid size-9 place-items-center rounded-lg text-slate-500 transition hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:text-slate-400 dark:hover:bg-brand-700/15 dark:hover:text-brand-100 dark:focus-visible:ring-offset-slate-950">
             <Info className="size-4" aria-hidden />
           </button>
           <div id="investment-disclaimer" role="tooltip" className="pointer-events-none invisible absolute bottom-full left-0 mb-2 w-52 translate-y-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-xs leading-5 text-slate-600 opacity-0 shadow-lg transition duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
