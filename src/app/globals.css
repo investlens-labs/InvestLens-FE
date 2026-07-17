@@ -10,7 +10,7 @@
   --color-brand-600: #0b6b4f;
   --color-brand-700: #095640;
   --color-ink-950: #101816;
-  --radius-card: 0.75rem;
+  --radius-card: 1rem;
 }
 
 :root { color-scheme: light; }
