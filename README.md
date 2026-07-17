@@ -2,6 +2,11 @@
 
 뉴스 기반 투자 영향 분석 서비스의 Next.js 프론트엔드입니다. 포트폴리오를 기준으로 맞춤 뉴스, 종목별 영향 방향과 점수를 제공합니다.
 
+## 문서
+
+- [서비스 소개](./docs/service-introduction.md)
+- [개발 문서](./docs/development.md)
+
 ## 기술 스택
 
 - Next.js 16 App Router, React 19, TypeScript
