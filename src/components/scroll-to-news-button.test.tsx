@@ -18,6 +18,6 @@ describe('ScrollToNewsButton', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '관련 뉴스로 이동' }))
 
-    expect(scrollTo).toHaveBeenCalledWith({ behavior: 'smooth', top: 928 })
+    expect(scrollTo).toHaveBeenCalledWith({ behavior: 'smooth', top: 944 })
   })
 })

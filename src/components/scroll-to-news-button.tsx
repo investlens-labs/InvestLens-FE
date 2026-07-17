@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const NEWS_SECTION_ID = 'instrument-news'
-const HEADER_OFFSET_PX = 72
+const HEADER_OFFSET_PX = 56
 
 export function ScrollToNewsButton() {
   const [hidden, setHidden] = useState(false)
