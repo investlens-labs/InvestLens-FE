@@ -59,7 +59,7 @@ src/
 | 회원가입 | POST | `/auth/signup` |
 | 로그인 | POST | `/auth/login` |
 | 내 정보 | GET | `/users/me` |
-| 종목 검색 | GET | `/instruments` |
+| 종목 검색 | GET | `/instruments?query=&market=KR|US&type=STOCK|ETF&limit=1~100` |
 | 종목 상세 | GET | `/instruments/{instrumentId}` |
 | 포트폴리오 조회/추가 | GET/POST | `/portfolio` |
 | 포트폴리오 삭제 | DELETE | `/portfolio/{portfolioItemId}` |

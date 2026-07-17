@@ -3,7 +3,7 @@ import type {
   AddPortfolioRequest,
   FeedItem,
   Instrument,
-  InstrumentType,
+  InstrumentSearchParams,
   LoginRequest,
   NewsDetail,
   NewsFilters,
@@ -14,7 +14,7 @@ import type {
   User,
 } from './types'
 
-const toQuery = (params: Record<string, string | number | undefined>) => {
+export const toQuery = (params: Record<string, string | number | undefined>) => {
   const query = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== '') query.set(key, String(value))
@@ -30,8 +30,8 @@ export const authApi = {
 }
 
 export const instrumentApi = {
-  search: (query = '', type?: InstrumentType) =>
-    apiClient.get<Instrument[]>(`/instruments${toQuery({ query, type })}`),
+  search: ({ query = '', market, type, limit = 50 }: InstrumentSearchParams = {}) =>
+    apiClient.get<Instrument[]>(`/instruments${toQuery({ query, market, type, limit })}`),
   get: (instrumentId: string) => apiClient.get<Instrument>(`/instruments/${instrumentId}`),
 }
 

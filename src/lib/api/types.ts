@@ -1,4 +1,5 @@
 export type InstrumentType = 'STOCK' | 'ETF'
+export type Market = 'KR' | 'US'
 export type ImpactDirection = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE'
 export type AnalysisStatus = 'PENDING' | 'COMPLETED' | 'FAILED'
 
@@ -23,11 +24,23 @@ export interface Instrument {
   ticker: string
   companyName: string
   type: InstrumentType
+  market: Market
 }
 
-export interface PortfolioItem extends Instrument {
+export interface PortfolioItem {
+  id: string
   instrumentId: string
+  ticker: string
+  companyName: string
+  type: InstrumentType
   createdAt: string
+}
+
+export interface InstrumentSearchParams {
+  query?: string
+  market?: Market
+  type?: InstrumentType
+  limit?: number
 }
 
 export interface Impact {
