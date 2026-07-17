@@ -9,6 +9,7 @@
 - TanStack Query (서버 상태 및 중복 요청 방지)
 - Vitest, React Testing Library
 - Lucide Icons
+- TradingView Lightweight Charts 5 (캔들·거래량 차트)
 
 ## 실행
 
@@ -61,6 +62,7 @@ src/
 | 내 정보 | GET | `/users/me` |
 | 종목 검색 | GET | `/instruments?query=&market=KR|US&type=STOCK|ETF&limit=1~100` |
 | 종목 상세 | GET | `/instruments/{instrumentId}` |
+| 종목 차트 | GET | `/instruments/{instrumentId}/chart?range=1D|1W|1M|3M|1Y|5Y` |
 | 포트폴리오 조회/추가 | GET/POST | `/portfolio` |
 | 포트폴리오 삭제 | DELETE | `/portfolio/{portfolioItemId}` |
 | 맞춤 뉴스 | GET | `/news` |

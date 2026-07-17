@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
+import { InstrumentChart } from '@/components/instrument-chart'
 import { ApiError } from '@/lib/api/client'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
 import { queryKeys } from '@/lib/query-keys'
@@ -52,6 +53,7 @@ export default function InstrumentDetailPage() {
               <div className="min-w-0"><h1 className="truncate text-xl font-semibold tracking-tight text-slate-950 dark:text-white">{data.companyName}</h1><p className="mt-1 font-mono text-sm font-bold tracking-wide text-brand-600">{data.ticker}</p></div>
             </div>
           </header>
+          <InstrumentChart instrumentId={data.id} />
           <div className="p-5">
             <h2 className="text-sm font-semibold text-slate-950 dark:text-white">종목 정보</h2>
             <dl className="mt-3 divide-y divide-slate-100 rounded-xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
