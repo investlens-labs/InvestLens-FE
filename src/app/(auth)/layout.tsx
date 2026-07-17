@@ -13,7 +13,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         <div className="max-w-lg">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">News intelligence for investors</p>
           <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight">시장 뉴스의 영향을<br />더 빠르고 명확하게.</h1>
-          <p className="mt-4 max-w-md text-sm leading-6 text-emerald-50/70">내가 보유한 종목을 중심으로 중요한 뉴스와 영향 가능성을 한 화면에서 확인하세요.</p>
+          <p className="mt-4 whitespace-nowrap text-sm leading-6 text-emerald-50/70">내가 보유한 종목을 중심으로 중요한 뉴스와 영향 가능성을 한 화면에서 확인하세요.</p>
           <ul className="mt-8 space-y-3">
             {points.map((point) => <li key={point} className="flex items-center gap-2.5 text-sm text-emerald-50/90"><CheckCircle2 className="size-4 text-emerald-300" />{point}</li>)}
           </ul>
