@@ -33,10 +33,10 @@ export default function PortfolioPage() {
             <div className="grid grid-cols-[90px_minmax(0,1fr)_80px_130px_64px] border-b border-slate-100 px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-400 max-md:hidden dark:border-slate-800"><span>티커</span><span>종목명</span><span>유형</span><span>등록일</span><span className="text-right">삭제</span></div>
             <ul className="divide-y divide-slate-100 dark:divide-slate-800">
               {portfolio.data.map((item) => (
-                <li key={item.id} className="grid grid-cols-[72px_minmax(0,1fr)_40px] items-center gap-3 px-4 py-3 transition hover:bg-brand-50/60 md:grid-cols-[90px_minmax(0,1fr)_80px_130px_64px] md:gap-2 dark:hover:bg-brand-700/10">
-                  <Link href={`/instruments/${item.instrumentId}`} className="rounded font-mono text-sm font-bold text-slate-950 hover:text-brand-700 dark:text-white dark:hover:text-brand-100">{item.ticker}</Link>
+                <li key={item.id} className="group grid grid-cols-[72px_minmax(0,1fr)_40px] items-center gap-3 px-4 py-3 transition hover:bg-brand-50/60 md:grid-cols-[90px_minmax(0,1fr)_80px_130px_64px] md:gap-2 dark:hover:bg-brand-700/10">
+                  <Link href={`/instruments/${item.instrumentId}`} className="rounded font-mono text-sm font-bold text-slate-950 group-hover:underline hover:text-brand-700 dark:text-white dark:hover:text-brand-100">{item.ticker}</Link>
                   <span className="min-w-0">
-                    <Link href={`/instruments/${item.instrumentId}`} className="block truncate rounded text-sm text-slate-700 hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-100">{item.companyName}</Link>
+                    <Link href={`/instruments/${item.instrumentId}`} className="block truncate rounded text-sm text-slate-700 group-hover:underline hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-100">{item.companyName}</Link>
                     <span className="mt-0.5 flex items-center gap-1.5 text-[11px] text-slate-500 md:hidden"><span>{item.type}</span><span aria-hidden>·</span><span>{formatDate(item.createdAt)}</span></span>
                   </span>
                   <span className="hidden w-fit rounded bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-600 md:block dark:bg-slate-800 dark:text-slate-300">{item.type}</span>

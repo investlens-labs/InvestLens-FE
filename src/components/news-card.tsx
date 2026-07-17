@@ -16,7 +16,7 @@ export function NewsCard({ news }: { news: FeedItem }) {
       </div>
       <Link href={`/news/${news.id}`} className="block rounded-md focus-visible:outline-offset-4">
         <div className="mt-2 flex items-start justify-between gap-4">
-          <h3 className="line-clamp-2 text-[15px] font-semibold leading-6 text-slate-950 group-hover:text-brand-700 dark:text-slate-100 dark:group-hover:text-brand-100">
+          <h3 className="line-clamp-2 text-[15px] font-semibold leading-6 text-slate-950 group-hover:text-brand-700 group-hover:underline dark:text-slate-100 dark:group-hover:text-brand-100">
             {news.translatedTitle || news.title}
           </h3>
           <ChevronRight aria-hidden className="mt-1 size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-brand-600" />
@@ -26,7 +26,7 @@ export function NewsCard({ news }: { news: FeedItem }) {
       <div className="mt-3 flex flex-wrap items-center gap-2">
         {primaryImpact ? (
           <>
-            <Link href={`/instruments/${primaryImpact.instrumentId}`} className="rounded-md bg-slate-900 px-2 py-1 font-mono text-xs font-bold tracking-wide text-white transition hover:bg-brand-600 focus-visible:outline-offset-2 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-brand-100">{primaryImpact.ticker}</Link>
+            <Link href={`/instruments/${primaryImpact.instrumentId}`} className="rounded-md bg-slate-900 px-2 py-1 font-mono text-xs font-bold tracking-wide text-white underline-offset-2 transition group-hover:underline hover:bg-brand-600 focus-visible:outline-offset-2 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-brand-100">{primaryImpact.ticker}</Link>
             <ImpactBadge direction={primaryImpact.direction} score={primaryImpact.score} />
             {news.impacts.length > 1 && <span className="text-xs text-slate-500">외 {news.impacts.length - 1}개 종목</span>}
           </>
