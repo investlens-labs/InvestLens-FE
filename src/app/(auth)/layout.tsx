@@ -9,7 +9,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <main id="main-content" className="grid min-h-screen bg-white lg:grid-cols-[minmax(340px,0.9fr)_1.1fr] dark:bg-slate-950">
       <section className="hidden bg-[#0d3329] p-10 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="flex items-center gap-2.5 text-lg font-bold"><span className="grid size-8 overflow-hidden rounded-lg bg-white/10" aria-hidden><Image src={logo} alt="" priority className="size-full scale-[1.65] object-contain" /></span>InvestLens</div>
+        <div className="flex items-center gap-2.5 text-lg font-bold"><span className="grid size-8 overflow-hidden rounded-lg bg-white/10" aria-hidden><Image src={logo} alt="" priority className="size-full object-contain" /></span>InvestLens</div>
         <div className="max-w-lg">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">News intelligence for investors</p>
           <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight">시장 뉴스의 영향을<br />더 빠르고 명확하게.</h1>

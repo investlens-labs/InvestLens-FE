@@ -40,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Menu className="size-5" />
           </button>
           <Link href="/dashboard" className="flex items-center gap-2 font-bold tracking-tight text-slate-950 dark:text-white">
-            <span className="grid size-7 overflow-hidden rounded-lg" aria-hidden><Image src={logo} alt="" priority className="size-full scale-[1.65] object-contain" /></span>
+            <span className="grid size-7 overflow-hidden rounded-lg" aria-hidden><Image src={logo} alt="" priority className="size-full object-contain" /></span>
             <span className="text-base">InvestLens</span>
           </Link>
           <div className="ml-auto flex items-center gap-1.5">
