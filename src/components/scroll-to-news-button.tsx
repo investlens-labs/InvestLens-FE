@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const NEWS_SECTION_ID = 'instrument-news'
+const HEADER_OFFSET_PX = 64
 
 export function ScrollToNewsButton() {
   const [hidden, setHidden] = useState(false)
@@ -27,7 +28,10 @@ export function ScrollToNewsButton() {
   }, [])
 
   const scrollToNews = () => {
-    document.getElementById(NEWS_SECTION_ID)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const target = document.getElementById(NEWS_SECTION_ID)
+    if (!target) return
+    const top = target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET_PX
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
   }
 
   return (
