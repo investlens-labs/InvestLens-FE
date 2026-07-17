@@ -38,8 +38,8 @@ export const instrumentApi = {
   get: (instrumentId: string) => apiClient.get<Instrument>(`/instruments/${instrumentId}`),
   chart: (instrumentId: string, range: ChartRange) =>
     apiClient.get<InstrumentChart>(`/instruments/${instrumentId}/chart${toQuery({ range })}`),
-  news: (instrumentId: string, { page = 0, size = 20 }: InstrumentNewsParams = {}) =>
-    apiClient.get<PageResponse<FeedItem>>(`/instruments/${instrumentId}/news${toQuery({ page, size })}`, { timeoutMs: 160_000 }),
+  news: (instrumentId: string, { language = 'ko', page = 0, size = 20 }: InstrumentNewsParams = {}) =>
+    apiClient.get<PageResponse<FeedItem>>(`/instruments/${instrumentId}/news${toQuery({ language, page, size })}`, { timeoutMs: 160_000 }),
 }
 
 export const portfolioApi = {

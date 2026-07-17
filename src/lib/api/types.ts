@@ -1,6 +1,7 @@
 export type InstrumentType = 'STOCK' | 'ETF'
 export type Market = 'KR' | 'US'
 export type ChartRange = '1D' | '1W' | '1M' | '3M' | '1Y' | '5Y'
+export type NewsLanguage = 'ko' | 'en' | 'ja' | 'zh'
 export type ImpactDirection = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE'
 export type AnalysisStatus = 'PENDING' | 'COMPLETED' | 'FAILED'
 
@@ -78,6 +79,8 @@ export interface Impact {
   direction: ImpactDirection
   score: number
   reason: string
+  aiAnalyzed: boolean
+  analysisModel: string | null
 }
 
 export interface FeedItem {
@@ -87,6 +90,9 @@ export interface FeedItem {
   title: string
   translatedTitle: string | null
   summary: string | null
+  language: NewsLanguage
+  localized: boolean
+  localizationModel: string | null
   marketContext: string | null
   analysisStatus: AnalysisStatus
   publishedAt: string
@@ -130,6 +136,7 @@ export interface NewsFilters {
 }
 
 export interface InstrumentNewsParams {
+  language?: NewsLanguage
   page?: number
   size?: number
 }
