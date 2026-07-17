@@ -47,11 +47,11 @@ export default function NewsDetailPage() {
               <h2 className="text-sm font-semibold text-slate-950 dark:text-white">종목별 영향 분석</h2>
               <div className="mt-3 space-y-3">
                 {news.impacts?.length ? news.impacts.map((impact) => (
-                  <div key={`${impact.instrumentId}-${impact.direction}`} className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/70">
+                  <Link key={`${impact.instrumentId}-${impact.direction}`} href={`/instruments/${impact.instrumentId}`} className="block rounded-lg bg-slate-50 p-3 transition hover:bg-brand-50 hover:ring-1 hover:ring-brand-100 dark:bg-slate-800/70 dark:hover:bg-brand-700/15 dark:hover:ring-brand-700/30">
                     <div className="flex items-center justify-between gap-2"><span><strong className="font-mono text-sm text-slate-950 dark:text-white">{impact.ticker}</strong><span className="ml-1.5 text-[11px] text-slate-500">{impact.instrumentType}</span></span><ImpactBadge direction={impact.direction} score={impact.score} /></div>
                     <p className="mt-1 truncate text-xs text-slate-500">{impact.companyName}</p>
                     <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{impact.reason}</p>
-                  </div>
+                  </Link>
                 )) : <p className="text-xs leading-5 text-slate-500">연관 종목 영향 분석이 아직 없습니다.</p>}
               </div>
             </section>

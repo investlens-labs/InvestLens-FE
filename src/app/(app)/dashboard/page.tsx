@@ -32,11 +32,11 @@ export default function DashboardPage() {
           <div className="p-2">
             {portfolio.isLoading ? <p className="p-3 text-xs text-slate-500">종목을 불러오는 중...</p>
               : portfolio.data?.length ? portfolio.data.slice(0, 7).map((item) => (
-                <div key={item.id} className="flex items-center gap-3 rounded-lg px-2.5 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                <Link key={item.id} href={`/instruments/${item.instrumentId}`} className="flex items-center gap-3 rounded-lg px-2.5 py-2 transition hover:bg-brand-50/80 dark:hover:bg-brand-700/15">
                   <span className="grid size-8 shrink-0 place-items-center rounded-md bg-slate-100 font-mono text-xs font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-100">{item.ticker.slice(0, 4)}</span>
                   <span className="min-w-0"><strong className="block text-xs text-slate-900 dark:text-white">{item.ticker}</strong><span className="block truncate text-[11px] text-slate-500">{item.companyName}</span></span>
                   <span className="ml-auto rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-800">{item.type}</span>
-                </div>
+                </Link>
               )) : <div className="p-4 text-center"><p className="text-sm font-medium text-slate-800 dark:text-slate-200">아직 종목이 없어요</p><p className="mt-1 text-xs leading-5 text-slate-500">관심 종목을 추가하면 맞춤 뉴스를 볼 수 있습니다.</p><Link href="/search" className="mt-3 inline-flex text-xs font-semibold text-brand-600 hover:underline">첫 종목 추가하기</Link></div>}
           </div>
         </aside>
