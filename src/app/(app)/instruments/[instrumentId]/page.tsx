@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { InstrumentChart } from '@/components/instrument-chart'
 import { InstrumentNews } from '@/components/instrument-news'
+import { ScrollToNewsButton } from '@/components/scroll-to-news-button'
 import { ApiError } from '@/lib/api/client'
 import { instrumentApi, portfolioApi } from '@/lib/api/services'
 import { queryKeys } from '@/lib/query-keys'
@@ -80,6 +81,7 @@ export default function InstrumentDetailPage() {
         </aside>
       </div>
       <InstrumentNews key={data.id} instrumentId={data.id} ticker={data.ticker} />
+      <ScrollToNewsButton />
       <div className="mt-4 text-right"><LogoAttribution url={data.logoAttributionUrl} /></div>
     </div>
   )

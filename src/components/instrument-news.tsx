@@ -21,7 +21,7 @@ export function InstrumentNews({ instrumentId, ticker }: { instrumentId: string;
   })
 
   return (
-    <section aria-labelledby="instrument-news-title" className="mt-4">
+    <section id="instrument-news" aria-labelledby="instrument-news-title" className="mt-4 scroll-mt-20">
       <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 id="instrument-news-title" className="flex items-center gap-2 text-base font-semibold text-slate-950 dark:text-white"><Newspaper className="size-4 text-brand-600" />{ticker} 관련 뉴스</h2>
