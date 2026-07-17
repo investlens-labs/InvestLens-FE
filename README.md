@@ -9,7 +9,7 @@
 - TanStack Query (서버 상태 및 중복 요청 방지)
 - Vitest, React Testing Library
 - Lucide Icons
-- TradingView Lightweight Charts 5 (캔들·거래량 차트)
+- TradingView Lightweight Charts 5 (영역·거래량 차트)
 
 ## 실행
 
@@ -63,9 +63,14 @@ src/
 | 종목 검색 | GET | `/instruments?query=&market=KR|US&type=STOCK|ETF&limit=1~100` |
 | 종목 상세 | GET | `/instruments/{instrumentId}` |
 | 종목 차트 | GET | `/instruments/{instrumentId}/chart?range=1D|1W|1M|3M|1Y|5Y` |
+| 종목 관련 뉴스 | GET | `/instruments/{instrumentId}/news?language=ko|en|ja|zh&page=0&size=20` |
 | 포트폴리오 조회/추가 | GET/POST | `/portfolio` |
 | 포트폴리오 삭제 | DELETE | `/portfolio/{portfolioItemId}` |
 | 맞춤 뉴스 | GET | `/news` |
 | 뉴스 상세 | GET | `/news/{newsId}` |
 
 > 뉴스 영향 분석은 투자 참고 정보이며 투자 조언 또는 주가 예측이 아닙니다.
+
+- 종목 뉴스는 `localized`가 참일 때만 번역 제목과 요약을 표시합니다.
+- 영향 방향과 1~5점 점수는 `aiAnalyzed`가 참인 실제 AI 분석 결과에만 표시합니다.
+- AI 비활성화 또는 호출 실패 fallback은 방향·점수 대신 `AI 분석 준비 중`으로 구분합니다.
