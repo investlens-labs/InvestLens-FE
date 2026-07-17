@@ -1,13 +1,10 @@
-import type { CandlestickData, HistogramData, UTCTimestamp } from 'lightweight-charts'
+import type { HistogramData, LineData, UTCTimestamp } from 'lightweight-charts'
 import type { ChartPoint } from '@/lib/api/types'
 
-export function toCandlestickData(points: ChartPoint[]): CandlestickData<UTCTimestamp>[] {
+export function toLineData(points: ChartPoint[]): LineData<UTCTimestamp>[] {
   return points.map((point) => ({
     time: point.timestamp as UTCTimestamp,
-    open: point.open,
-    high: point.high,
-    low: point.low,
-    close: point.close,
+    value: point.close,
   }))
 }
 

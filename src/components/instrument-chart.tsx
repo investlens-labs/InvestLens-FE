@@ -2,12 +2,13 @@
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import {
-  CandlestickSeries,
+  AreaSeries,
   ColorType,
   CrosshairMode,
   createChart,
   HistogramSeries,
-  type CandlestickData,
+  type HistogramData,
+  type LineData,
   type Time,
 } from 'lightweight-charts'
 import { AlertTriangle, Clock3, RefreshCw } from 'lucide-react'
@@ -15,7 +16,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from '@/components/providers/theme-provider'
 import { instrumentApi } from '@/lib/api/services'
 import type { ChartRange, InstrumentChart as InstrumentChartData } from '@/lib/api/types'
-import { toCandlestickData, toVolumeData } from '@/lib/chart-data'
+import { toLineData, toVolumeData } from '@/lib/chart-data'
 import { queryKeys } from '@/lib/query-keys'
 
 const ranges: Array<{ value: ChartRange; label: string }> = [
@@ -75,8 +76,8 @@ function PriceSummary({ data }: { data: InstrumentChartData }) {
 function PriceVolumeChart({ data, dimmed }: { data: InstrumentChartData; dimmed: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
-  const [hover, setHover] = useState<{ timestamp: number; close: number; changeRate: number } | null>(null)
-  const candles = useMemo(() => toCandlestickData(data.points), [data.points])
+  const [hover, setHover] = useState<{ timestamp: number; close: number; changeRate: number; volume: number } | null>(null)
+  const lines = useMemo(() => toLineData(data.points), [data.points])
   const volumes = useMemo(() => toVolumeData(data.points), [data.points])
 
   useEffect(() => {
@@ -108,11 +109,16 @@ function PriceVolumeChart({ data, dimmed }: { data: InstrumentChartData; dimmed:
       handleScale: { axisPressedMouseMove: true, mouseWheel: true, pinch: true },
       localization: { priceFormatter: (price: number) => formatPrice(price, data.currency) },
     })
-    const candleSeries = instance.addSeries(CandlestickSeries, {
-      upColor: '#ef4444', downColor: '#2563eb', borderVisible: false, wickUpColor: '#ef4444', wickDownColor: '#2563eb',
+    const rising = data.change >= 0
+    const lineColor = rising ? '#ef4444' : '#2563eb'
+    const areaSeries = instance.addSeries(AreaSeries, {
+      lineColor,
+      topColor: rising ? 'rgba(239, 68, 68, 0.22)' : 'rgba(37, 99, 235, 0.22)',
+      bottomColor: rising ? 'rgba(239, 68, 68, 0.01)' : 'rgba(37, 99, 235, 0.01)',
+      lineWidth: 2,
       priceLineVisible: true, lastValueVisible: true,
     })
-    candleSeries.setData(candles)
+    areaSeries.setData(lines)
     const volumeSeries = instance.addSeries(HistogramSeries, { priceFormat: { type: 'volume' }, priceLineVisible: false, lastValueVisible: false }, 1)
     volumeSeries.setData(volumes)
     instance.panes()[0]?.setStretchFactor(4)
@@ -120,15 +126,17 @@ function PriceVolumeChart({ data, dimmed }: { data: InstrumentChartData; dimmed:
     instance.timeScale().fitContent()
 
     const handleCrosshair = (param: { seriesData: Map<unknown, unknown> }) => {
-      const value = param.seriesData.get(candleSeries) as CandlestickData<Time> | undefined
+      const value = param.seriesData.get(areaSeries) as LineData<Time> | undefined
+      const volume = param.seriesData.get(volumeSeries) as HistogramData<Time> | undefined
       if (!value || typeof value.time !== 'number') {
         setHover(null)
         return
       }
       setHover({
         timestamp: value.time,
-        close: value.close,
-        changeRate: data.previousClose ? ((value.close - data.previousClose) / data.previousClose) * 100 : 0,
+        close: value.value,
+        changeRate: data.previousClose ? ((value.value - data.previousClose) / data.previousClose) * 100 : 0,
+        volume: volume?.value ?? 0,
       })
     }
     instance.subscribeCrosshairMove(handleCrosshair)
@@ -136,14 +144,14 @@ function PriceVolumeChart({ data, dimmed }: { data: InstrumentChartData; dimmed:
       instance.unsubscribeCrosshairMove(handleCrosshair)
       instance.remove()
     }
-  }, [candles, data.currency, data.previousClose, data.range, theme, volumes])
+  }, [data.change, data.currency, data.previousClose, data.range, lines, theme, volumes])
 
   return (
     <div className={`relative transition-opacity duration-200 ${dimmed ? 'opacity-55' : 'opacity-100'}`}>
       <div className="pointer-events-none absolute left-3 top-2 z-10 min-h-9 text-xs">
-        {hover && <><strong className="text-slate-800 dark:text-slate-100">{formatChartDate(hover.timestamp, data.timezone)}</strong><span className="ml-2 text-slate-600 dark:text-slate-300">{formatPrice(hover.close, data.currency)}</span><span className={`ml-2 font-semibold ${hover.changeRate >= 0 ? 'text-red-500' : 'text-blue-600 dark:text-blue-400'}`}>{hover.changeRate >= 0 ? '+' : ''}{hover.changeRate.toFixed(2)}%</span></>}
+        {hover && <><strong className="text-slate-800 dark:text-slate-100">{formatChartDate(hover.timestamp, data.timezone)}</strong><span className="ml-2 text-slate-600 dark:text-slate-300">{formatPrice(hover.close, data.currency)}</span><span className={`ml-2 font-semibold ${hover.changeRate >= 0 ? 'text-red-500' : 'text-blue-600 dark:text-blue-400'}`}>{hover.changeRate >= 0 ? '+' : ''}{hover.changeRate.toFixed(2)}%</span><span className="ml-2 text-slate-500">거래량 {formatVolume(hover.volume)}</span></>}
       </div>
-      <div ref={containerRef} role="img" className="h-[360px] w-full sm:h-[430px]" aria-label={`${data.ticker} ${data.range} 캔들 및 거래량 차트. 현재가 ${formatPrice(data.currentPrice, data.currency)}, 등락률 ${data.changeRate.toFixed(2)}퍼센트`} />
+      <div ref={containerRef} role="img" className="h-[360px] w-full sm:h-[430px]" aria-label={`${data.ticker} ${data.range} 가격 영역 및 거래량 차트. 현재가 ${formatPrice(data.currentPrice, data.currency)}, 등락률 ${data.changeRate.toFixed(2)}퍼센트`} />
       {dimmed && <span className="absolute right-3 top-2 rounded bg-white/90 px-2 py-1 text-[11px] font-medium text-slate-500 shadow-sm dark:bg-slate-800/90 dark:text-slate-300">기간 데이터 갱신 중</span>}
       <a href="https://www.tradingview.com/" target="_blank" rel="noreferrer" className="absolute bottom-1 left-3 text-[9px] text-slate-400 hover:underline">Charts by TradingView</a>
     </div>
@@ -176,4 +184,8 @@ function formatChartDate(timestamp: number, timezone: string) {
   } catch {
     return new Date(timestamp * 1000).toLocaleString('ko-KR')
   }
+}
+
+function formatVolume(value: number) {
+  return new Intl.NumberFormat('ko-KR', { notation: 'compact', maximumFractionDigits: 1 }).format(value)
 }
