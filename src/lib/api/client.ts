@@ -1,6 +1,6 @@
 import { tokenStorage } from '@/lib/auth/token-storage'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://investlens-be.onrender.com/api/v1'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api/backend'
 const RETRY_DELAYS = [900, 1800]
 
 export class ApiError extends Error {

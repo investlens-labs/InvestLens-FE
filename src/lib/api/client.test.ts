@@ -20,7 +20,7 @@ describe('apiClient', () => {
     await apiClient.get('/users/me')
 
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://investlens-be.onrender.com/api/v1/users/me',
+      '/api/backend/users/me',
       expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer test-access-token' }) }),
     )
   })

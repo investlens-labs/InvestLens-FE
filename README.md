@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-기본 API URL은 `https://investlens-be.onrender.com/api/v1`이며 `NEXT_PUBLIC_API_BASE_URL`로 변경할 수 있습니다.
+서버 프록시의 기본 업스트림은 `https://investlens-be.onrender.com/api/v1`이며 `INVESTLENS_API_BASE_URL`로 변경할 수 있습니다. 브라우저는 CORS 영향을 피하기 위해 기본적으로 동일 출처 `/api/backend`를 호출합니다.
 
 ## 품질 검증
 
@@ -44,6 +44,7 @@ src/
 ### API 정책
 
 - JWT는 `Authorization: Bearer {accessToken}` 형식으로 전달합니다.
+- Next.js Route Handler가 허용된 API 경로만 백엔드로 전달해 브라우저 CORS 의존성을 제거합니다.
 - 인증된 요청의 401 응답은 토큰과 Query 캐시를 제거하고 로그인으로 이동합니다.
 - 무료 서버의 cold start를 고려해 GET 요청만 5xx/네트워크 오류 시 최대 2회 지연 재시도합니다.
 - POST/DELETE는 중복 변경을 막기 위해 자동 재시도하지 않습니다.
