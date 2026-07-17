@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, ChevronRight, Plus, Search, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState, type KeyboardEvent } from 'react'
+import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { PageHeading } from '@/components/page-heading'
 import { Button } from '@/components/ui/button'
 import { ErrorState, StatusState } from '@/components/ui/status-state'
@@ -29,6 +30,7 @@ export default function SearchPage() {
     onSuccess: () => void queryClient.invalidateQueries({ queryKey: queryKeys.portfolio }),
   })
   const portfolioIds = new Set(portfolio.data?.map((item) => item.instrumentId))
+  const logoAttributionUrl = instruments.data?.find((item) => item.logoAttributionUrl)?.logoAttributionUrl ?? null
 
   useEffect(() => setActiveIndex(-1), [debouncedKeyword, market, type])
 
@@ -78,13 +80,16 @@ export default function SearchPage() {
         : !instruments.data?.length ? <StatusState title="검색 결과가 없습니다" description="티커 철자나 종목 유형을 바꿔 다시 검색해 보세요." />
         : (
           <div className="surface overflow-hidden">
-            <div className="grid grid-cols-[100px_minmax(0,1fr)_72px_72px_178px] border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/70 max-sm:hidden">
+            <div className="grid grid-cols-[132px_minmax(0,1fr)_72px_72px_178px] border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/70 max-sm:hidden">
               <span>티커</span><span>종목명</span><span>시장</span><span>유형</span><span className="text-right">관리</span>
             </div>
             <ul className="divide-y divide-slate-100 dark:divide-slate-800">
               {instruments.data.map((instrument, index) => <InstrumentRow key={instrument.id} instrument={instrument} exactMatch={Boolean(debouncedKeyword) && instrument.ticker.toLocaleUpperCase() === debouncedKeyword.toLocaleUpperCase()} active={activeIndex === index} added={portfolioIds.has(instrument.id)} pending={addMutation.isPending && addMutation.variables?.instrumentId === instrument.id} onFocus={() => setActiveIndex(index)} onAdd={() => addMutation.mutate({ instrumentId: instrument.id })} />)}
             </ul>
-            <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50">총 {instruments.data.length}개 종목</div>
+            <div className="flex items-center justify-between gap-3 border-t border-slate-100 bg-slate-50/60 px-4 py-2 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50">
+              <span>총 {instruments.data.length}개 종목</span>
+              <LogoAttribution url={logoAttributionUrl} />
+            </div>
           </div>
         )}
       {addMutation.isError && <div role="alert" className="fixed bottom-4 right-4 rounded-lg border border-red-200 bg-white px-4 py-3 text-sm text-red-600 shadow-xl dark:border-red-900 dark:bg-slate-900">종목을 추가하지 못했습니다. 이미 등록된 종목인지 확인해 주세요.</div>}
@@ -94,8 +99,8 @@ export default function SearchPage() {
 
 function InstrumentRow({ instrument, exactMatch, active, added, pending, onFocus, onAdd }: { instrument: Instrument; exactMatch: boolean; active: boolean; added: boolean; pending: boolean; onFocus: () => void; onAdd: () => void }) {
   return (
-    <li className={`group grid items-center gap-2 px-4 py-3 transition hover:bg-brand-50/60 sm:grid-cols-[100px_minmax(0,1fr)_72px_72px_178px] dark:hover:bg-brand-700/10 ${exactMatch ? 'bg-brand-50/70 dark:bg-brand-700/10' : active ? 'bg-slate-50 dark:bg-slate-800/50' : ''}`}>
-      <Link href={`/instruments/${instrument.id}`} className="flex items-center gap-2 rounded font-mono text-sm font-bold text-slate-950 group-hover:underline hover:text-brand-700 dark:text-white dark:hover:text-brand-100"><span>{instrument.ticker}</span>{exactMatch && <span className="hidden rounded bg-brand-100 px-1.5 py-0.5 font-sans text-[10px] font-bold text-brand-700 no-underline lg:inline dark:bg-brand-700/30 dark:text-brand-100">정확히 일치</span>}</Link>
+    <li className={`group grid items-center gap-2 px-4 py-3 transition hover:bg-brand-50/60 sm:grid-cols-[132px_minmax(0,1fr)_72px_72px_178px] dark:hover:bg-brand-700/10 ${exactMatch ? 'bg-brand-50/70 dark:bg-brand-700/10' : active ? 'bg-slate-50 dark:bg-slate-800/50' : ''}`}>
+      <Link href={`/instruments/${instrument.id}`} className="flex items-center gap-2 rounded font-mono text-sm font-bold text-slate-950 group-hover:underline hover:text-brand-700 dark:text-white dark:hover:text-brand-100"><InstrumentLogo companyName={instrument.companyName} ticker={instrument.ticker} logoUrl={instrument.logoUrl} /><span>{instrument.ticker}</span>{exactMatch && <span className="hidden rounded bg-brand-100 px-1.5 py-0.5 font-sans text-[10px] font-bold text-brand-700 no-underline lg:inline dark:bg-brand-700/30 dark:text-brand-100">정확히 일치</span>}</Link>
       <span className="min-w-0"><Link href={`/instruments/${instrument.id}`} className="block truncate rounded text-sm text-slate-700 group-hover:underline hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-100">{instrument.companyName}</Link><span className="mt-1 flex gap-1.5 sm:hidden"><MarketBadge market={instrument.market} /><TypeBadge type={instrument.type} /></span></span>
       <MarketBadge market={instrument.market} className="max-sm:hidden" />
       <TypeBadge type={instrument.type} className="max-sm:hidden" />
@@ -116,5 +121,5 @@ function TypeBadge({ type, className = '' }: { type: InstrumentType; className?:
 }
 
 function SearchSkeleton() {
-  return <div className="surface divide-y divide-slate-100 dark:divide-slate-800">{[1, 2, 3, 4, 5].map((item) => <div key={item} className="flex items-center gap-4 p-4"><div className="h-4 w-14 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /><div className="h-4 flex-1 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /><div className="h-8 w-20 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /></div>)}</div>
+  return <div className="surface divide-y divide-slate-100 dark:divide-slate-800">{[1, 2, 3, 4, 5].map((item) => <div key={item} className="flex items-center gap-4 p-4"><div className="size-8 shrink-0 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800" /><div className="h-4 w-14 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /><div className="h-4 flex-1 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /><div className="h-8 w-20 animate-pulse rounded bg-slate-200 dark:bg-slate-800" /></div>)}</div>
 }

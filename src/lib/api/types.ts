@@ -26,6 +26,8 @@ export interface Instrument {
   companyName: string
   type: InstrumentType
   market: Market
+  logoUrl: string | null
+  logoAttributionUrl: string | null
 }
 
 export interface PortfolioItem {

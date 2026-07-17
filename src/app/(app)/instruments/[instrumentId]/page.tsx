@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, BarChart3, Check, Globe2, Plus, Tag } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { InstrumentLogo, LogoAttribution } from '@/components/instrument-logo'
 import { Button } from '@/components/ui/button'
 import { ErrorState, LoadingState, StatusState } from '@/components/ui/status-state'
 import { InstrumentChart } from '@/components/instrument-chart'
@@ -49,7 +50,7 @@ export default function InstrumentDetailPage() {
               <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{data.type === 'STOCK' ? '주식 · STOCK' : 'ETF'}</span>
             </div>
             <div className="mt-4 flex items-start gap-4">
-              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-slate-950 font-mono text-sm font-bold text-white dark:bg-slate-100 dark:text-slate-950">{data.ticker.slice(0, 4)}</span>
+              <InstrumentLogo companyName={data.companyName} ticker={data.ticker} logoUrl={data.logoUrl} size={48} />
               <div className="min-w-0"><h1 className="truncate text-xl font-semibold tracking-tight text-slate-950 dark:text-white">{data.companyName}</h1><p className="mt-1 font-mono text-sm font-bold tracking-wide text-brand-600">{data.ticker}</p></div>
             </div>
           </header>
@@ -73,6 +74,7 @@ export default function InstrumentDetailPage() {
           <Link href="/dashboard" className="mt-2 inline-flex h-9 w-full items-center justify-center rounded-lg text-xs font-semibold text-brand-600 hover:bg-brand-50 dark:hover:bg-brand-700/10">맞춤 뉴스 확인</Link>
         </aside>
       </div>
+      <div className="mt-4 text-right"><LogoAttribution url={data.logoAttributionUrl} /></div>
     </div>
   )
 }
