@@ -1,11 +1,13 @@
 'use client'
 
-import { BarChart3, BriefcaseBusiness, ChevronDown, LayoutDashboard, LogOut, Menu, Moon, Search, Sun, UserRound, X } from 'lucide-react'
+import { BriefcaseBusiness, ChevronDown, LayoutDashboard, LogOut, Menu, Moon, Search, Sun, UserRound, X } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { useTheme } from '@/components/providers/theme-provider'
+import logo from '@/app/icon.png'
 
 const navItems = [
   { href: '/dashboard', label: '대시보드', icon: LayoutDashboard },
@@ -38,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Menu className="size-5" />
           </button>
           <Link href="/dashboard" className="flex items-center gap-2 font-bold tracking-tight text-slate-950 dark:text-white">
-            <span className="grid size-7 place-items-center rounded-lg bg-brand-600 text-white"><BarChart3 className="size-4" /></span>
+            <span className="grid size-7 overflow-hidden rounded-lg" aria-hidden><Image src={logo} alt="" priority className="size-full scale-[1.65] object-contain" /></span>
             <span className="text-base">InvestLens</span>
           </Link>
           <div className="ml-auto flex items-center gap-1.5">

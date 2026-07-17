@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { BarChart3, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
+import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Button } from '@/components/ui/button'
 import { ApiError } from '@/lib/api/client'
 import { authApi } from '@/lib/api/services'
+import logo from '@/app/icon.png'
 
 export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const { signIn } = useAuth()
@@ -35,7 +37,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
 
   return (
     <div className="w-full max-w-[420px]">
-      <div className="mb-7 flex items-center justify-center gap-2 text-lg font-bold lg:hidden dark:text-white"><span className="grid size-8 place-items-center rounded-lg bg-brand-600 text-white"><BarChart3 className="size-4" /></span>InvestLens</div>
+      <div className="mb-7 flex items-center justify-center gap-2 text-lg font-bold lg:hidden dark:text-white"><span className="grid size-8 overflow-hidden rounded-lg" aria-hidden><Image src={logo} alt="" priority className="size-full scale-[1.65] object-contain" /></span>InvestLens</div>
       <div className="surface p-5 sm:p-7">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-600">{isSignup ? 'Create account' : 'Welcome back'}</p>
