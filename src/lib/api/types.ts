@@ -1,5 +1,6 @@
 export type InstrumentType = 'STOCK' | 'ETF'
 export type Market = 'KR' | 'US'
+export type ChartRange = '1D' | '1W' | '1M' | '3M' | '1Y' | '5Y'
 export type ImpactDirection = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE'
 export type AnalysisStatus = 'PENDING' | 'COMPLETED' | 'FAILED'
 
@@ -41,6 +42,30 @@ export interface InstrumentSearchParams {
   market?: Market
   type?: InstrumentType
   limit?: number
+}
+
+export interface ChartPoint {
+  timestamp: number
+  open: number
+  high: number
+  low: number
+  close: number
+  volume: number
+}
+
+export interface InstrumentChart {
+  instrumentId: string
+  ticker: string
+  range: ChartRange
+  interval: string
+  currency: string
+  timezone: string
+  currentPrice: number
+  previousClose: number
+  change: number
+  changeRate: number
+  exchangeDataDelayedBy: number
+  points: ChartPoint[]
 }
 
 export interface Impact {

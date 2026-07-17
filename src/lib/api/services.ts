@@ -1,8 +1,10 @@
 import { apiClient } from './client'
 import type {
   AddPortfolioRequest,
+  ChartRange,
   FeedItem,
   Instrument,
+  InstrumentChart,
   InstrumentSearchParams,
   LoginRequest,
   NewsDetail,
@@ -33,6 +35,8 @@ export const instrumentApi = {
   search: ({ query = '', market, type, limit = 50 }: InstrumentSearchParams = {}) =>
     apiClient.get<Instrument[]>(`/instruments${toQuery({ query, market, type, limit })}`),
   get: (instrumentId: string) => apiClient.get<Instrument>(`/instruments/${instrumentId}`),
+  chart: (instrumentId: string, range: ChartRange) =>
+    apiClient.get<InstrumentChart>(`/instruments/${instrumentId}/chart${toQuery({ range })}`),
 }
 
 export const portfolioApi = {

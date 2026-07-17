@@ -16,4 +16,12 @@ describe('instrumentApi', () => {
   it('빈 선택 필터는 쿼리 문자열에서 제외한다', () => {
     expect(toQuery({ query: '', market: undefined, type: undefined, limit: 50 })).toBe('?limit=50')
   })
+
+  it('종목 ID와 range로 차트 경로를 생성한다', async () => {
+    const get = vi.spyOn(apiClient, 'get').mockResolvedValue({})
+
+    await instrumentApi.chart('instrument-uuid', '3M')
+
+    expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/chart?range=3M')
+  })
 })
