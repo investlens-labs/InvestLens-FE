@@ -348,17 +348,11 @@ git diff --check
 
 `wrangler.jsonc`에 공개 가능한 기본 API 주소가 포함되어 있습니다. 비밀 값이 추가되는 경우 파일에 직접 작성하지 않고 Cloudflare의 Variables and Secrets에서 관리합니다.
 
-### Cloudflare Workers Builds
+### GitHub Actions 자동 배포
 
-GitHub 저장소 연결 화면에서 다음 값을 사용합니다.
+Pull Request는 품질 검증과 OpenNext 빌드까지만 수행하고, `master` 브랜치의 변경만 Cloudflare Workers 운영 환경에 자동 배포합니다. GitHub Actions에는 `CLOUDFLARE_ACCOUNT_ID`와 최소 권한의 `CLOUDFLARE_API_TOKEN`을 Repository secret으로 등록합니다.
 
-```text
-Project name:   investlens
-Build command:  npm run build:cloudflare
-Deploy command: npx @opennextjs/cloudflare deploy
-```
-
-main 브랜치의 변경이 배포 대상입니다. Build Variables and secrets에는 필요에 따라 다음 값을 등록할 수 있습니다.
+런타임에는 다음 공개 환경 변수가 적용됩니다.
 
 ```text
 INVESTLENS_API_BASE_URL=https://investlens-be.onrender.com/api/v1
@@ -366,6 +360,8 @@ NEXT_PUBLIC_API_BASE_URL=/api/backend
 ```
 
 동일한 기본값이 `wrangler.jsonc`에도 있어 별도 변수를 등록하지 않아도 현재 백엔드로 연결됩니다.
+
+캐시, 동시 실행 제어, 스모크 테스트와 수동 재배포 방법은 [배포 파이프라인 문서](./deployment.md)를 참고합니다. Cloudflare의 Git 자동 배포는 GitHub Actions와 중복되므로 비활성화합니다.
 
 ### 로컬 Worker 검증
 

@@ -31,20 +31,16 @@ npm run dev
 
 프로젝트는 OpenNext 어댑터와 Wrangler를 통해 `investlens` Worker로 배포됩니다.
 
+Pull Request에는 lint, typecheck, test와 OpenNext build를 자동 실행하고, `master` 반영 시 동일 검증을 통과한 빌드를 Cloudflare Workers에 자동 배포합니다. 운영 배포 후 `/login` 스모크 테스트까지 완료되어야 파이프라인이 성공합니다.
+
 ```bash
 npm run build:cloudflare
 npm run preview
 npm run deploy
 ```
 
-Cloudflare Workers Builds에서는 다음 명령을 사용합니다.
-
-```text
-Build command:  npm run build:cloudflare
-Deploy command: npx @opennextjs/cloudflare deploy
-```
-
 환경 변수와 호환성 설정은 `wrangler.jsonc`, OpenNext 설정은 `open-next.config.ts`에서 관리합니다.
+자동화 구성과 필요한 GitHub Actions 비밀값은 [배포 파이프라인 문서](./docs/deployment.md)를 참고하세요. 중복 배포를 막기 위해 Cloudflare의 Git 자동 배포는 함께 사용하지 않습니다.
 
 ## 품질 검증
 
