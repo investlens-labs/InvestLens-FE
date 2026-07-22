@@ -6,6 +6,7 @@
 
 - [서비스 소개](./docs/service-introduction.md)
 - [개발 문서](./docs/development.md)
+- [Codex 에이전트 팀 운영](./docs/agent-team.md)
 
 ## 기술 스택
 
