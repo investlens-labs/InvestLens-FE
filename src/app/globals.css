@@ -31,6 +31,71 @@ button, a { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid #138966; outline-offset: 2px; }
 ::selection { background: #bcebdc; color: #073f30; }
 
+@keyframes landing-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes landing-chart-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes landing-bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes landing-row-enter {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.landing-grid::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(15 23 42 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(15 23 42 / 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to right, transparent, black 28%, black 72%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.dark .landing-grid::before {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+}
+
+.landing-enter {
+  animation: landing-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-enter-delay-2 { animation-delay: 90ms; }
+.landing-chart-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: landing-chart-draw 900ms 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.landing-bar { transform: scaleX(0); animation: landing-bar-grow 720ms 360ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.landing-bar-positive { width: 62%; }
+.landing-bar-neutral { width: 23%; animation-delay: 430ms; }
+.landing-bar-negative { width: 15%; animation-delay: 500ms; }
+.landing-news-row { opacity: 0; animation: landing-row-enter 360ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.landing-news-delay-1 { animation-delay: 420ms; }
+.landing-news-delay-2 { animation-delay: 480ms; }
+.landing-news-delay-3 { animation-delay: 540ms; }
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  .landing-enter,
+  .landing-chart-line,
+  .landing-bar,
+  .landing-news-row {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 @layer components {
   .surface { @apply rounded-card border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900; }
   .field { @apply h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100; }
