@@ -10,6 +10,8 @@
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy:built": "opennextjs-cloudflare deploy",
+    "smoke:production": "node scripts/smoke-deployment.mjs",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "lint": "eslint . --max-warnings 0",
@@ -49,5 +51,8 @@
   },
   "overrides": {
     "postcss": "^8.5.19"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
