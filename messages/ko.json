@@ -17,9 +17,33 @@
     "user": "일반 사용자"
   },
   "metadata": {
-    "description": "내 포트폴리오에 중요한 투자 뉴스를 빠르게 파악하세요.",
+    "homeTitle": "InvestLens | AI 투자 뉴스 영향 분석",
+    "description": "한국·미국 주식과 ETF의 주요 뉴스를 포트폴리오에 맞춰 분석하고, 영향 방향과 1–10점 점수를 한눈에 확인하세요.",
     "login": "로그인",
     "signup": "회원가입"
+  },
+  "landing": {
+    "homeLabel": "InvestLens 홈",
+    "accountMenu": "계정 메뉴",
+    "previewEyebrow": "뉴스 영향 분석 미리보기",
+    "previewNews1": "실적 개선과 신규 수요 확대",
+    "previewNews2": "규제 변화에 따른 비용 부담",
+    "previewNews3": "산업 동향과 공급망 변화",
+    "previewScore": "단기 영향 가능성 · {score}점",
+    "featuresTitle": "투자 판단에 필요한 뉴스를 더 빠르게 정리하세요",
+    "featuresDescription": "관심 종목을 기준으로 뉴스를 수집하고 AI가 기사 근거에 따라 영향 방향, 점수와 이유를 정리합니다.",
+    "newsDescription": "내 포트폴리오와 관련된 최신 기사를 한 화면에서 확인합니다.",
+    "analysisDescription": "긍정·중립·부정 방향과 1–10점 영향도를 기사별로 구분합니다.",
+    "searchDescription": "티커와 기업명으로 한국·미국 주식 및 ETF를 빠르게 찾습니다.",
+    "marketsTitle": "한국·미국 주식과 ETF를 한곳에서",
+    "marketsDescription": "InvestLens 백엔드의 종목 데이터와 시세 API를 사용해 국장과 미장의 관심 종목, 가격 흐름, 관련 뉴스를 연결합니다.",
+    "supportedFeatures": "지원 기능",
+    "marketPoint1": "한국·미국 주식 검색",
+    "marketPoint2": "국내외 ETF 탐색",
+    "marketPoint3": "기간별 가격·거래량 차트",
+    "marketPoint4": "종목별 관련 뉴스 분석",
+    "ctaTitle": "관심 종목부터 등록해 보세요",
+    "ctaDescription": "포트폴리오를 구성하면 내 종목을 중심으로 맞춤 뉴스와 AI 영향 분석을 확인할 수 있습니다."
   },
   "nav": {
     "dashboard": "대시보드",

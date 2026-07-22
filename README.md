@@ -6,6 +6,8 @@
 
 - [서비스 소개](./docs/service-introduction.md)
 - [개발 문서](./docs/development.md)
+- [검색엔진 최적화](./docs/seo.md)
+- [배포 파이프라인](./docs/deployment.md)
 - [Codex 에이전트 팀 운영](./docs/agent-team.md)
 
 ## 기술 스택

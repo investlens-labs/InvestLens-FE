@@ -17,9 +17,33 @@
     "user": "一般ユーザー"
   },
   "metadata": {
-    "description": "ポートフォリオに重要な投資ニュースをすばやく把握できます。",
+    "homeTitle": "InvestLens | AI投資ニュース影響分析",
+    "description": "韓国・米国の株式とETFの主要ニュースをポートフォリオに合わせて分析し、影響方向と1～10点のスコアを確認できます。",
     "login": "ログイン",
     "signup": "新規登録"
+  },
+  "landing": {
+    "homeLabel": "InvestLensホーム",
+    "accountMenu": "アカウントメニュー",
+    "previewEyebrow": "ニュース影響分析プレビュー",
+    "previewNews1": "業績改善と新規需要の拡大",
+    "previewNews2": "規制変更によるコスト負担",
+    "previewNews3": "業界動向とサプライチェーンの変化",
+    "previewScore": "短期的な影響可能性 · {score}点",
+    "featuresTitle": "投資判断に必要なニュースをより速く整理",
+    "featuresDescription": "注目銘柄を基準にニュースを収集し、記事の根拠から影響方向、スコア、理由をAIが整理します。",
+    "newsDescription": "ポートフォリオに関連する最新記事を一画面で確認できます。",
+    "analysisDescription": "記事ごとにポジティブ・中立・ネガティブ方向と1～10点の影響度を表示します。",
+    "searchDescription": "ティッカーや企業名から韓国・米国の株式とETFをすばやく検索できます。",
+    "marketsTitle": "韓国・米国の株式とETFを一か所で",
+    "marketsDescription": "InvestLensの銘柄・価格APIを利用し、注目銘柄、価格推移、関連ニュースをつなぎます。",
+    "supportedFeatures": "対応機能",
+    "marketPoint1": "韓国・米国株式の検索",
+    "marketPoint2": "国内外ETFの検索",
+    "marketPoint3": "期間別の価格・出来高チャート",
+    "marketPoint4": "銘柄別の関連ニュース分析",
+    "ctaTitle": "注目銘柄の登録から始めましょう",
+    "ctaDescription": "ポートフォリオを作成すると、保有銘柄を中心にパーソナライズニュースとAI影響分析を確認できます。"
   },
   "nav": {
     "dashboard": "ダッシュボード",
