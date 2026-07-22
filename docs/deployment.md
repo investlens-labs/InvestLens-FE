@@ -13,7 +13,7 @@ master push  → install → lint → typecheck → test → OpenNext build → 
 - npm 다운로드 캐시와 `.next/cache`를 재사용합니다.
 - OpenNext 빌드는 한 번만 실행하고, 검증된 `.open-next` 결과를 `deploy:built`로 업로드합니다.
 - 같은 Pull Request의 이전 실행은 취소하지만 운영 배포는 중간에 취소하지 않습니다.
-- 운영 확인은 캐시를 우회해 `/login`이 정상 HTML을 반환할 때까지 제한적으로 재시도합니다.
+- 운영 확인은 캐시를 우회해 공개 랜딩 `/`이 정상 InvestLens HTML을 반환할 때까지 제한적으로 재시도합니다.
 - Dependabot이 npm 패키지와 GitHub Actions 업데이트를 매주 묶어서 제안합니다.
 
 워크플로 파일은 [`.github/workflows/ci-deploy.yml`](../.github/workflows/ci-deploy.yml), 스모크 테스트는 [`scripts/smoke-deployment.mjs`](../scripts/smoke-deployment.mjs)에 있습니다.

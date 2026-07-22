@@ -7,6 +7,7 @@ InvestLens 프론트엔드의 서비스 개요와 구현 방식을 정리한 문
 - [서비스 소개](./service-introduction.md): 서비스가 해결하는 문제, 핵심 기능, 화면 구성과 분석 정보 해석 방법
 - [개발 문서](./development.md): 기술 스택, 아키텍처, API 연동, 상태 관리, 예외 처리와 검증 방법
 - [배포 파이프라인](./deployment.md): GitHub Actions 검증, Cloudflare 자동 배포, 캐시와 운영 복구 방법
+- [검색엔진 최적화](./seo.md): 공개 색인 정책, 메타데이터, 구조화 데이터와 검색 콘솔 운영 방법
 - [Codex 에이전트 팀 운영](./agent-team.md): 역할 분배, 파일 소유권, 검증과 자동화 범위
 
 ## 관련 링크
