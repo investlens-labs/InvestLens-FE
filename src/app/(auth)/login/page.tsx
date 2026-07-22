@@ -4,6 +4,6 @@ import { AuthForm } from '@/components/auth/auth-form'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('metadata')
-  return { title: t('login') }
+  return { title: t('login'), alternates: { canonical: '/login' }, robots: { index: false, follow: true } }
 }
 export default function LoginPage() { return <AuthForm mode="login" /> }

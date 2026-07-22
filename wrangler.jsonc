@@ -15,6 +15,7 @@
   },
   "vars": {
     "INVESTLENS_API_BASE_URL": "https://investlens-be.onrender.com/api/v1",
-    "NEXT_PUBLIC_API_BASE_URL": "/api/backend"
+    "NEXT_PUBLIC_API_BASE_URL": "/api/backend",
+    "NEXT_PUBLIC_SITE_URL": "https://investlens.mandoo4137-a53.workers.dev"
   }
 }

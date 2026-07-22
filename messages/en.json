@@ -17,9 +17,33 @@
     "user": "User"
   },
   "metadata": {
-    "description": "Quickly identify the investment news that matters to your portfolio.",
+    "homeTitle": "InvestLens | AI Investment News Impact Analysis",
+    "description": "Analyze key news for South Korean and U.S. stocks and ETFs, then review portfolio-specific impact direction and scores from 1 to 10.",
     "login": "Sign in",
     "signup": "Sign up"
+  },
+  "landing": {
+    "homeLabel": "InvestLens home",
+    "accountMenu": "Account menu",
+    "previewEyebrow": "News impact analysis preview",
+    "previewNews1": "Improving earnings and new demand",
+    "previewNews2": "Cost pressure from regulatory changes",
+    "previewNews3": "Industry trends and supply chain changes",
+    "previewScore": "Potential short-term impact · Score {score}",
+    "featuresTitle": "Organize the news that informs investment decisions faster",
+    "featuresDescription": "InvestLens collects news for the securities you follow and uses article evidence to summarize impact direction, score, and reasoning.",
+    "newsDescription": "Review the latest articles related to your portfolio in one place.",
+    "analysisDescription": "Distinguish positive, neutral, and negative direction with a 1–10 impact score for each article.",
+    "searchDescription": "Quickly find South Korean and U.S. stocks and ETFs by ticker or company name.",
+    "marketsTitle": "South Korean and U.S. stocks and ETFs in one place",
+    "marketsDescription": "InvestLens connects watchlists, price trends, and related news using its backend instrument and market data APIs.",
+    "supportedFeatures": "Supported features",
+    "marketPoint1": "South Korean and U.S. stock search",
+    "marketPoint2": "Domestic and international ETF discovery",
+    "marketPoint3": "Price and volume charts by period",
+    "marketPoint4": "Security-specific news analysis",
+    "ctaTitle": "Start with the securities you follow",
+    "ctaDescription": "Build a portfolio to receive personalized news and AI impact analysis focused on your holdings."
   },
   "nav": {
     "dashboard": "Dashboard",

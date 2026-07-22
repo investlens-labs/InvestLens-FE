@@ -17,9 +17,33 @@
     "user": "普通用户"
   },
   "metadata": {
-    "description": "快速掌握与我的投资组合密切相关的重要投资新闻。",
+    "homeTitle": "InvestLens | AI投资新闻影响分析",
+    "description": "分析韩国和美国股票及ETF的重要新闻，并根据您的投资组合查看影响方向和1至10分评分。",
     "login": "登录",
     "signup": "注册"
+  },
+  "landing": {
+    "homeLabel": "InvestLens首页",
+    "accountMenu": "账户菜单",
+    "previewEyebrow": "新闻影响分析预览",
+    "previewNews1": "业绩改善与新增需求",
+    "previewNews2": "监管变化带来的成本压力",
+    "previewNews3": "行业趋势与供应链变化",
+    "previewScore": "短期影响可能性 · {score}分",
+    "featuresTitle": "更快整理投资决策所需新闻",
+    "featuresDescription": "InvestLens围绕关注的证券收集新闻，并根据文章依据整理影响方向、评分与原因。",
+    "newsDescription": "在一个页面查看与投资组合相关的最新报道。",
+    "analysisDescription": "按文章区分利好、中性和利空方向，并提供1至10分影响评分。",
+    "searchDescription": "通过代码或公司名称快速查找韩国和美国股票及ETF。",
+    "marketsTitle": "集中查看韩国、美国股票与ETF",
+    "marketsDescription": "InvestLens使用后端证券与行情API，连接关注列表、价格走势和相关新闻。",
+    "supportedFeatures": "支持功能",
+    "marketPoint1": "韩国与美国股票搜索",
+    "marketPoint2": "境内外ETF查询",
+    "marketPoint3": "按周期查看价格与成交量图表",
+    "marketPoint4": "证券相关新闻分析",
+    "ctaTitle": "从关注证券开始",
+    "ctaDescription": "建立投资组合后，可围绕持仓查看个性化新闻和AI影响分析。"
   },
   "nav": {
     "dashboard": "仪表盘",
