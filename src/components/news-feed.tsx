@@ -18,6 +18,8 @@ const directions = [
   { value: 'NEGATIVE', labelKey: 'negative', marker: '↘ ' },
 ] as const satisfies ReadonlyArray<{ value: ImpactDirection | ''; labelKey: 'allDirections' | 'positive' | 'neutral' | 'negative'; marker: string }>
 
+export const impactScoreOptions = Array.from({ length: 10 }, (_, index) => 10 - index)
+
 export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
   const t = useTranslations('news')
   const common = useTranslations('common')
@@ -47,7 +49,7 @@ export function NewsFeed({ initialSize = 10 }: { initialSize?: number }) {
           <label className="sr-only" htmlFor="score">{t('minimumScore')}</label>
           <select id="score" className="field h-9 w-auto min-w-28 py-0" value={minScore} onChange={(event) => updateScore(event.target.value ? Number(event.target.value) : '')}>
             <option value="">{t('allScores')}</option>
-            {[5, 4, 3, 2, 1].map((score) => <option key={score} value={score}>{t('scoreOrMore', { score: new Intl.NumberFormat(locale).format(score) })}</option>)}
+            {impactScoreOptions.map((score) => <option key={score} value={score}>{t('scoreOrMore', { score: new Intl.NumberFormat(locale).format(score) })}</option>)}
           </select>
         </div>
       </div>
