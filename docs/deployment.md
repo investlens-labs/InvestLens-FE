@@ -13,7 +13,7 @@ master push  → install → lint → typecheck → test → OpenNext build → 
 - npm 다운로드 캐시와 `.next/cache`를 재사용합니다.
 - OpenNext 빌드는 한 번만 실행하고, 검증된 `.open-next` 결과를 `deploy:built`로 업로드합니다.
 - 같은 Pull Request의 이전 실행은 취소하지만 운영 배포는 중간에 취소하지 않습니다.
-- 운영 확인은 `/login`이 정상 HTML을 반환할 때까지 제한적으로 재시도합니다.
+- 운영 확인은 캐시를 우회해 `/login`이 정상 HTML을 반환할 때까지 제한적으로 재시도합니다.
 - Dependabot이 npm 패키지와 GitHub Actions 업데이트를 매주 묶어서 제안합니다.
 
 워크플로 파일은 [`.github/workflows/ci-deploy.yml`](../.github/workflows/ci-deploy.yml), 스모크 테스트는 [`scripts/smoke-deployment.mjs`](../scripts/smoke-deployment.mjs)에 있습니다.
@@ -45,4 +45,10 @@ npm run deploy
 npm run smoke:production
 ```
 
-배포 실패 시 GitHub Actions 로그에서 실패 단계를 확인합니다. 검증 단계가 실패한 커밋은 배포되지 않으며, 배포 뒤 스모크 테스트가 실패하면 Cloudflare Workers의 이전 정상 버전으로 롤백한 뒤 원인을 수정합니다.
+배포 실패 시 GitHub Actions 로그에서 실패 단계를 확인합니다. 검증 단계가 실패한 커밋은 배포되지 않습니다. 배포 뒤 스모크 테스트가 실패하면 Cloudflare 대시보드의 **Workers & Pages → investlens → Deployments**에서 이전 정상 버전으로 롤백합니다. CLI에서는 대상 버전 ID를 확인한 뒤 다음처럼 실행할 수 있습니다.
+
+```bash
+npx wrangler rollback <version-id> --message "production smoke test failed"
+```
+
+자동 배포는 안전을 위해 진행 중인 운영 배포를 취소하지 않습니다. `master`에 커밋이 연속 반영되면 현재 배포가 끝난 뒤 가장 최신 대기 실행이 이어집니다.

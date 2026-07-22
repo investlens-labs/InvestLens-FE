@@ -4,9 +4,19 @@ const delayMs = Number(process.env.SMOKE_DELAY_MS ?? 5_000);
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
+const createRequestUrl = () => {
+  const url = new URL(targetUrl);
+  url.searchParams.set("smoke", `${Date.now()}`);
+  return url;
+};
+
 for (let attempt = 1; attempt <= attempts; attempt += 1) {
   try {
-    const response = await fetch(targetUrl, {
+    const response = await fetch(createRequestUrl(), {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache",
+      },
       redirect: "follow",
       signal: AbortSignal.timeout(20_000),
     });
