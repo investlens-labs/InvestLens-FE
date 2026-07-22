@@ -82,7 +82,8 @@ export default async function HomePage() {
                 <span className="h-px w-6 bg-brand-500" aria-hidden="true" />{auth('tagline')}
               </p>
               <h1 className="mt-4 max-w-3xl text-[2.55rem] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-5xl lg:text-[3.7rem]">
-                {auth('heroLine1')} <span className="text-brand-600">{auth('heroLine2')}</span>
+                <span className="block break-keep">{auth('heroLine1')}</span>
+                <span className="mt-1 block break-keep text-brand-600">{auth('heroLine2')}</span>
               </h1>
               <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-600 sm:text-base dark:text-slate-300">{auth('heroDescription')}</p>
               <div className="mt-7 flex flex-wrap gap-2.5">
