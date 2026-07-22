@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { renderWithIntl } from '@/test/render'
 import { ScrollToNewsButton } from './scroll-to-news-button'
 
 describe('ScrollToNewsButton', () => {
@@ -14,7 +15,7 @@ describe('ScrollToNewsButton', () => {
     target.scrollIntoView = vi.fn()
     target.getBoundingClientRect = vi.fn(() => ({ bottom: 1100, height: 100, left: 0, right: 100, top: 1000, width: 100, x: 0, y: 1000, toJSON: () => ({}) }))
     document.body.appendChild(target)
-    render(<ScrollToNewsButton />)
+    renderWithIntl(<ScrollToNewsButton />, { locale: 'ko' })
 
     fireEvent.click(screen.getByRole('button', { name: '관련 뉴스로 이동' }))
 

@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { AuthForm } from '@/components/auth/auth-form'
 
-export const metadata: Metadata = { title: '회원가입' }
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata')
+  return { title: t('signup') }
+}
 export default function SignupPage() { return <AuthForm mode="signup" /> }

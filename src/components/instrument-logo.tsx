@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface InstrumentLogoProps {
   companyName: string
@@ -15,9 +16,11 @@ interface LogoAttributionProps {
 }
 
 export function InstrumentLogo({ companyName, logoUrl, size = 32, ticker }: InstrumentLogoProps) {
+  const t = useTranslations('instrument')
+  const common = useTranslations('common')
   const [failedUrl, setFailedUrl] = useState<string | null>(null)
   const canShowImage = Boolean(logoUrl) && failedUrl !== logoUrl
-  const label = companyName.trim() || ticker?.trim() || '종목'
+  const label = companyName.trim() || ticker?.trim() || common('stock')
   const monogram = label.slice(0, 1).toLocaleUpperCase()
 
   return (
@@ -29,14 +32,14 @@ export function InstrumentLogo({ companyName, logoUrl, size = 32, ticker }: Inst
         // API가 제공한 서명 URL을 그대로 사용해야 하므로 Next Image 변환을 거치지 않는다.
         <img
           src={logoUrl ?? undefined}
-          alt={`${companyName} 로고`}
+          alt={t('logoAlt', { companyName })}
           width={size}
           height={size}
           className="size-full object-contain p-1"
           onError={() => setFailedUrl(logoUrl)}
         />
       ) : (
-        <span role="img" aria-label={`${label} 로고 없음`} className={size === 48 ? 'text-base' : 'text-xs'}>
+        <span role="img" aria-label={t('logoMissing', { name: label })} className={size === 48 ? 'text-base' : 'text-xs'}>
           {monogram}
         </span>
       )}
@@ -45,11 +48,12 @@ export function InstrumentLogo({ companyName, logoUrl, size = 32, ticker }: Inst
 }
 
 export function LogoAttribution({ className = '', url }: LogoAttributionProps) {
+  const t = useTranslations('instrument')
   if (!url) return null
 
   return (
     <a href={url} target="_blank" rel="noreferrer" className={`inline-flex rounded px-1 py-1 text-[11px] text-slate-500 underline decoration-slate-300 underline-offset-4 hover:bg-slate-100 hover:text-slate-800 dark:decoration-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200 ${className}`}>
-      Logos provided by Logo.dev
+      {t('logoAttribution')}
     </a>
   )
 }

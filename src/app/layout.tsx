@@ -1,21 +1,32 @@
 import type { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 import './globals.css'
 import { AppProviders } from '@/components/providers/app-providers'
 
-export const metadata: Metadata = {
-  title: { default: 'InvestLens', template: '%s · InvestLens' },
-  description: '내 포트폴리오에 중요한 투자 뉴스를 빠르게 파악하세요.',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata')
+  return {
+    title: { default: 'InvestLens', template: '%s · InvestLens' },
+    description: t('description'),
+  }
 }
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+  const t = await getTranslations('accessibility')
+
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <a href="#main-content" className="sr-only z-50 rounded bg-brand-600 px-3 py-2 text-white focus:not-sr-only focus:fixed focus:left-3 focus:top-3">
-          본문으로 건너뛰기
+          {t('skipToContent')}
         </a>
-        <AppProviders>{children}</AppProviders>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AppProviders>{children}</AppProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

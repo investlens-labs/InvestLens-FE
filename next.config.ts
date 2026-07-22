@@ -1,10 +1,11 @@
 import type { NextConfig } from 'next'
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 }
 
-export default nextConfig
+export default createNextIntlPlugin()(nextConfig)
 
 initOpenNextCloudflareForDev()

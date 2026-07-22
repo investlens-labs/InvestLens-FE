@@ -1,4 +1,7 @@
+'use client'
+
 import { AlertTriangle, Inbox, LoaderCircle, RefreshCw, type LucideIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from './button'
 
 interface StatusStateProps {
@@ -23,16 +26,19 @@ export function StatusState({ title, description, icon: Icon = Inbox, actionLabe
   )
 }
 
-export function LoadingState({ label = '데이터를 불러오는 중입니다.' }: { label?: string }) {
+export function LoadingState({ label }: { label?: string }) {
+  const t = useTranslations('status')
   return (
     <div className="surface flex min-h-52 flex-col items-center justify-center p-6 text-center" role="status">
       <LoaderCircle className="size-6 animate-spin text-brand-600" aria-hidden />
-      <p className="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">{label}</p>
-      <p className="mt-1 text-xs text-slate-500">무료 서버가 깨어나는 데 최대 1분 정도 걸릴 수 있어요.</p>
+      <p className="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">{label ?? t('loading')}</p>
+      <p className="mt-1 text-xs text-slate-500">{t('coldStart')}</p>
     </div>
   )
 }
 
 export function ErrorState({ onRetry }: { onRetry: () => void }) {
-  return <StatusState title="정보를 불러오지 못했습니다" description="잠시 후 다시 시도해 주세요. 문제가 계속되면 네트워크 연결을 확인해 주세요." icon={AlertTriangle} actionLabel="다시 시도" onAction={onRetry} />
+  const t = useTranslations('status')
+  const common = useTranslations('common')
+  return <StatusState title={t('errorTitle')} description={t('errorDescription')} icon={AlertTriangle} actionLabel={common('retry')} onAction={onRetry} />
 }

@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import type { FeedItem } from '@/lib/api/types'
+import { renderWithIntl } from '@/test/render'
 import { RelatedNewsItem } from './instrument-news'
 
 const news: FeedItem = {
@@ -10,7 +11,7 @@ const news: FeedItem = {
 
 describe('RelatedNewsItem', () => {
   it('번역 제목을 우선 표시하고 원문을 안전한 새 탭 링크로 연다', () => {
-    render(<RelatedNewsItem news={news} />)
+    renderWithIntl(<RelatedNewsItem news={news} />, { locale: 'ko' })
 
     const link = screen.getByRole('link', { name: /번역 제목/ })
     expect(link).toHaveAttribute('href', news.originalUrl)
@@ -24,7 +25,7 @@ describe('RelatedNewsItem', () => {
   })
 
   it('fallback 영향은 방향과 점수 대신 분석 준비 상태를 표시한다', () => {
-    render(<RelatedNewsItem news={{ ...news, localized: false, impacts: [{ ...news.impacts[0], aiAnalyzed: false }] }} />)
+    renderWithIntl(<RelatedNewsItem news={{ ...news, localized: false, impacts: [{ ...news.impacts[0], aiAnalyzed: false }] }} />, { locale: 'ko' })
 
     expect(screen.getByText('Original title')).toBeInTheDocument()
     expect(screen.getByText('원문 기사 · 번역을 사용할 수 없습니다.')).toBeInTheDocument()
