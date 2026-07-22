@@ -9,11 +9,16 @@ const config = {
 } satisfies Record<ImpactDirection, { icon: typeof ArrowRight; className: string }>
 
 export const impactScoreDescription: Record<number, string> = {
-  1: '단순 언급 또는 영향 거의 없음',
-  2: '간접적이고 제한적인 영향',
-  3: '사업·수요·비용·규제에 의미 있는 영향',
-  4: '실적이나 핵심 사업에 직접적인 큰 영향',
-  5: '기업 전체에 치명적이거나 즉각적인 중대 영향',
+  1: '영향 거의 없음',
+  2: '매우 제한적인 영향 가능성',
+  3: '제한적인 영향 가능성',
+  4: '중간 이하의 영향 가능성',
+  5: '중간 수준 영향',
+  6: '중간 이상의 영향 가능성',
+  7: '큰 영향 가능성',
+  8: '매우 큰 영향 가능성',
+  9: '중대하고 즉각적인 영향 가능성',
+  10: '매우 크고 즉각적인 영향 가능성',
 }
 
 export function ImpactBadge({ direction, score, showScore = true }: { direction: ImpactDirection; score?: number; showScore?: boolean }) {

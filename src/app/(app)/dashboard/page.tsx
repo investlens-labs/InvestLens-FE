@@ -17,7 +17,7 @@ export default function DashboardPage() {
       <section className="mb-5 grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="요약 지표">
         <SummaryCard icon={BriefcaseBusiness} label="관심 종목" value={portfolio.isLoading ? '—' : `${portfolio.data?.length ?? 0}개`} sub="포트폴리오 기준" />
         <SummaryCard icon={Newspaper} label="뉴스 분석" value="실시간" sub="영향 방향·점수 제공" />
-        <SummaryCard icon={ShieldCheck} label="분석 범위" value="1–5점" sub="투자 영향 가능성" />
+        <SummaryCard icon={ShieldCheck} label="분석 범위" value="1–10점" sub="투자 영향 가능성" />
         <Link href="/search" className="surface group flex min-h-24 items-center gap-3 p-4 transition hover:border-brand-500/40">
           <span className="grid size-10 place-items-center rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-700/20 dark:text-brand-100"><Search className="size-5" /></span>
           <span><span className="block text-sm font-semibold text-slate-900 dark:text-white">종목 추가</span><span className="mt-1 flex items-center gap-1 text-xs text-slate-500">검색으로 이동 <ArrowRight className="size-3 transition group-hover:translate-x-0.5" /></span></span>

@@ -3,9 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { ImpactBadge } from './impact-badge'
 
 describe('ImpactBadge', () => {
-  it('색상에 의존하지 않고 영향 방향과 점수를 텍스트로 표시한다', () => {
-    render(<ImpactBadge direction="NEGATIVE" score={4} />)
-    expect(screen.getByText('부정 · 4점')).toBeInTheDocument()
-    expect(screen.getByText('부정 · 4점')).toHaveAttribute('title', '4점: 실적이나 핵심 사업에 직접적인 큰 영향')
+  it.each([
+    [1, '영향 거의 없음'],
+    [5, '중간 수준 영향'],
+    [10, '매우 크고 즉각적인 영향 가능성'],
+  ])('%i점 기준을 색상뿐 아니라 텍스트와 설명으로 표시한다', (score, description) => {
+    render(<ImpactBadge direction="NEGATIVE" score={score} />)
+    expect(screen.getByText(`부정 · ${score}점`)).toHaveAttribute('title', `${score}점: ${description}`)
   })
 })

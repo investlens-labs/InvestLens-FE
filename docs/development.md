@@ -244,11 +244,13 @@ GET /instruments/{instrumentId}/news?language=ko&page=0&size=20
 `aiAnalyzed`가 `true`인 경우에만 다음 값을 실제 AI 평가로 표시합니다.
 
 - `direction`: `POSITIVE`, `NEUTRAL`, `NEGATIVE`
-- `score`: 1~5점
+- `score`: 1~10점
 - `reason`: 평가 이유
 - `analysisModel`: 분석에 사용된 모델
 
 `aiAnalyzed`가 `false`라면 방향·점수·이유 대신 `AI 분석 준비 중`을 표시합니다. fallback 값을 실제 분석처럼 오인하지 않게 하는 것이 핵심 정책입니다.
+
+영향 분석은 종목 직접 뉴스뿐 아니라 기사에 근거가 있는 산업, 경쟁사, 공급망, 고객사, 규제, 금리와 환율의 간접 영향까지 포함합니다. 1점은 영향이 거의 없는 상태, 5점은 중간 수준, 10점은 매우 크고 즉각적인 영향 가능성을 의미합니다.
 
 ## 13. 디자인 시스템과 접근성
 
