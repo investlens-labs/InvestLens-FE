@@ -89,6 +89,7 @@ src/
 | 종목 상세 | GET | `/instruments/{instrumentId}` |
 | 종목 차트 | GET | `/instruments/{instrumentId}/chart?range=1D|1W|1M|3M|1Y|5Y` |
 | 종목 관련 뉴스 | GET | `/instruments/{instrumentId}/news?language=ko|en|ja|zh&page=0&size=20` |
+| 종목 뉴스 AI 반응 집계 | GET | `/instruments/{instrumentId}/news/sentiment` |
 | 포트폴리오 조회/추가 | GET/POST | `/portfolio` |
 | 포트폴리오 삭제 | DELETE | `/portfolio/{portfolioItemId}` |
 | 맞춤 뉴스 | GET | `/news` |
@@ -98,4 +99,5 @@ src/
 
 - 종목 뉴스는 `localized`가 참일 때만 번역 제목과 요약을 표시합니다.
 - 영향 방향과 1~5점 점수는 `aiAnalyzed`가 참인 실제 AI 분석 결과에만 표시합니다.
+- AI 분석 기사에는 상승·하락·중립 가능성을 표시하고, 종목 상세에는 분석 완료 기사의 평균 집계를 제공합니다.
 - AI 비활성화 또는 호출 실패 fallback은 방향·점수 대신 `AI 분석 준비 중`으로 구분합니다.

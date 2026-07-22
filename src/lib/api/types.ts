@@ -81,6 +81,20 @@ export interface Impact {
   reason: string
   aiAnalyzed: boolean
   analysisModel: string | null
+  upProbability: number
+  downProbability: number
+  neutralProbability: number
+}
+
+export interface InstrumentNewsSentiment {
+  aiAnalyzed: boolean
+  analyzedArticleCount: number
+  relatedArticleCount: number
+  upPercentage: number
+  downPercentage: number
+  neutralPercentage: number
+  analysisModel: string | null
+  disclaimer: string
 }
 
 export interface FeedItem {

@@ -4,6 +4,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { AlertTriangle, ChevronLeft, ChevronRight, Clock3, ExternalLink, Languages, Newspaper, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { ImpactBadge } from '@/components/impact-badge'
+import { InstrumentSentiment, InstrumentSentimentSkeleton } from '@/components/instrument-sentiment'
 import { StatusState } from '@/components/ui/status-state'
 import { instrumentApi } from '@/lib/api/services'
 import type { FeedItem, Impact, NewsLanguage } from '@/lib/api/types'
@@ -26,6 +27,11 @@ export function InstrumentNews({ instrumentId, ticker }: { instrumentId: string;
     queryFn: () => instrumentApi.news(instrumentId, { language, page, size: PAGE_SIZE }),
     placeholderData: keepPreviousData,
   })
+  const sentiment = useQuery({
+    queryKey: queryKeys.instrumentNewsSentiment(instrumentId),
+    queryFn: () => instrumentApi.sentiment(instrumentId),
+    enabled: news.isSuccess,
+  })
 
   return (
     <section id="instrument-news" aria-labelledby="instrument-news-title" className="mt-4">
@@ -43,6 +49,16 @@ export function InstrumentNews({ instrumentId, ticker }: { instrumentId: string;
           </select>
         </div>
       </div>
+
+      {news.isSuccess && (sentiment.isLoading
+        ? <InstrumentSentimentSkeleton />
+        : sentiment.data ? <InstrumentSentiment sentiment={sentiment.data} />
+          : sentiment.isError ? (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
+              <span>AI 종합 분석을 불러오지 못했습니다. 기사 목록은 계속 확인할 수 있습니다.</span>
+              <button type="button" className="h-8 rounded-lg px-2.5 font-semibold hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:hover:bg-amber-900/40" onClick={() => void sentiment.refetch()}>다시 시도</button>
+            </div>
+          ) : null)}
 
       {news.isLoading ? <InstrumentNewsSkeleton />
         : news.isError ? <StatusState compact icon={AlertTriangle} title="관련 뉴스를 수집하지 못했습니다" description="외부 뉴스 제공처의 응답이 지연되었을 수 있습니다. 잠시 후 다시 시도해 주세요." actionLabel="다시 시도" onAction={() => void news.refetch()} />
@@ -104,6 +120,12 @@ function ImpactResult({ impact }: { impact: Impact }) {
     )
   }
 
+  const probabilities = [
+    { label: '상승', value: impact.upProbability, className: 'text-red-600 dark:text-red-400' },
+    { label: '하락', value: impact.downProbability, className: 'text-blue-600 dark:text-blue-400' },
+    { label: '중립', value: impact.neutralProbability, className: 'text-slate-600 dark:text-slate-300' },
+  ]
+
   return (
     <div className="rounded-xl bg-slate-50 px-3 py-2.5 dark:bg-slate-800/70">
       <div className="flex flex-wrap items-center gap-2">
@@ -112,6 +134,9 @@ function ImpactResult({ impact }: { impact: Impact }) {
         {impact.analysisModel && <span className="text-[11px] text-slate-400">AI · {impact.analysisModel}</span>}
       </div>
       <p className="mt-1.5 text-[15px] leading-6 text-slate-600 dark:text-slate-400">{impact.reason}</p>
+      <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-200 pt-2 text-xs dark:border-slate-700">
+        {probabilities.map((item) => <div key={item.label} className="flex items-center gap-1"><dt className="text-slate-500">{item.label}</dt><dd className={`font-mono font-bold ${item.className}`}>{item.value}%</dd></div>)}
+      </dl>
     </div>
   )
 }

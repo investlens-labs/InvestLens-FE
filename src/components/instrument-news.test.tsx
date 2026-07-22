@@ -5,7 +5,7 @@ import { RelatedNewsItem } from './instrument-news'
 
 const news: FeedItem = {
   id: 'news-1', source: 'Reuters', originalUrl: 'https://example.com/original', title: 'Original title', translatedTitle: '번역 제목', summary: null, marketContext: null,
-  language: 'ko', localized: true, localizationModel: 'gemini-2.5-flash', analysisStatus: 'COMPLETED', publishedAt: '2026-07-17T00:00:00Z', impacts: [{ instrumentId: 'instrument-1', ticker: 'AAPL', companyName: 'Apple', instrumentType: 'STOCK', direction: 'POSITIVE', score: 4, reason: '실적 개선', aiAnalyzed: true, analysisModel: 'gemini-2.5-flash' }],
+  language: 'ko', localized: true, localizationModel: 'gemini-2.5-flash', analysisStatus: 'COMPLETED', publishedAt: '2026-07-17T00:00:00Z', impacts: [{ instrumentId: 'instrument-1', ticker: 'AAPL', companyName: 'Apple', instrumentType: 'STOCK', direction: 'POSITIVE', score: 4, reason: '실적 개선', aiAnalyzed: true, analysisModel: 'gemini-2.5-flash', upProbability: 68, downProbability: 12, neutralProbability: 20 }],
 }
 
 describe('RelatedNewsItem', () => {
@@ -18,6 +18,9 @@ describe('RelatedNewsItem', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     expect(screen.getByText('긍정 · 4점')).toBeInTheDocument()
     expect(screen.getByText('실적 개선')).toBeInTheDocument()
+    expect(screen.getByText('68%')).toBeInTheDocument()
+    expect(screen.getByText('12%')).toBeInTheDocument()
+    expect(screen.getByText('20%')).toBeInTheDocument()
   })
 
   it('fallback 영향은 방향과 점수 대신 분석 준비 상태를 표시한다', () => {
@@ -27,5 +30,6 @@ describe('RelatedNewsItem', () => {
     expect(screen.getByText('원문 기사 · 번역을 사용할 수 없습니다.')).toBeInTheDocument()
     expect(screen.getByText('AI 분석 준비 중')).toBeInTheDocument()
     expect(screen.queryByText('긍정 · 4점')).not.toBeInTheDocument()
+    expect(screen.queryByText('68%')).not.toBeInTheDocument()
   })
 })

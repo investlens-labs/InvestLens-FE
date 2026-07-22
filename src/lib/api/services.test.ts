@@ -32,4 +32,12 @@ describe('instrumentApi', () => {
 
     expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/news?language=ja&page=2&size=20', { timeoutMs: 160_000 })
   })
+
+  it('종목 ID로 관련 뉴스 AI 집계 경로를 생성한다', async () => {
+    const get = vi.spyOn(apiClient, 'get').mockResolvedValue({})
+
+    await instrumentApi.sentiment('instrument-uuid')
+
+    expect(get).toHaveBeenCalledWith('/instruments/instrument-uuid/news/sentiment')
+  })
 })
