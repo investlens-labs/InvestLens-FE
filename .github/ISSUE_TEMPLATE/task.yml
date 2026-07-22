@@ -1,0 +1,55 @@
+name: 작업 요청
+description: 기능, 오류 수정, 리팩터링, 문서 또는 운영 작업을 등록합니다.
+title: "[작업] "
+labels: []
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 작업 유형
+      options:
+        - 기능
+        - 오류 수정
+        - 리팩터링
+        - UI/UX
+        - 테스트
+        - 문서
+        - 배포/운영
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 배경 및 목적
+      description: 이 작업이 필요한 이유와 기대 결과를 작성해주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 작업 범위
+      description: 포함할 변경과 제외할 변경을 구체적으로 작성해주세요.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 완료 조건
+      description: 검증 가능한 체크리스트로 작성해주세요.
+      value: |
+        - [ ] 요구 동작 구현
+        - [ ] 오류·로딩·빈 상태 확인
+        - [ ] 관련 테스트 및 정적 검사 통과
+        - [ ] 문서 또는 운영 절차 반영
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 참고 자료
+      description: Swagger, 디자인, 로그, 스크린샷 또는 관련 링크를 작성해주세요.
+

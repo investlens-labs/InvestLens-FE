@@ -136,16 +136,33 @@ npm run build:cloudflare
 
 완료 보고 전에 최신 실행 결과를 직접 확인합니다. 실행할 수 없는 검증은 통과했다고 표현하지 않고 이유와 남은 위험을 명시합니다.
 
-## 8. Git 규칙
+## 8. Issue 및 Pull Request 규칙
+
+- 모든 코드, 문서, 설정 변경은 구현 전에 GitHub Issue를 생성하고 작업 범위와 완료 조건을 기록합니다.
+- 긴급한 운영 장애 대응을 제외하면 `master`에서 직접 작업하거나 직접 푸시하지 않습니다.
+- 브랜치는 `<type>/<issue-number>-<short-description>` 형식을 사용합니다. 예: `fix/42-news-score-filter`.
+- 커밋과 Pull Request 본문에서 `#<issue-number>`를 참조해 변경 이력을 연결합니다.
+- Pull Request에는 변경 내용, 검증 결과, 영향 범위와 롤백 방법을 기록합니다.
+- CI의 lint, typecheck, test, build 검증이 모두 통과한 뒤에만 Pull Request를 병합합니다.
+- 병합 후 연결된 Issue가 자동으로 닫혔는지 확인하고, 실패하면 완료 상태와 근거를 댓글로 남긴 뒤 닫습니다.
+- 작은 작업은 하나의 Issue와 하나의 Pull Request로 끝내고, 범위가 커지면 독립적으로 검증 가능한 Issue로 분리합니다.
+
+기본 흐름은 다음과 같습니다.
+
+```text
+Issue 생성 → 작업 브랜치 → 구현·검증 → 논리 커밋 → Pull Request → CI 통과 → 병합 → Issue 종료
+```
+
+## 9. Git 규칙
 
 - 논리적으로 독립된 변경마다 작은 커밋을 생성합니다.
 - 커밋 형식은 `<type> : <한국어 설명>`을 사용합니다.
 - 허용 예시: `feat`, `fix`, `test`, `docs`, `refactor`, `style`, `chore`.
 - 커밋 전 `git diff --check`와 관련 검증을 실행합니다.
-- 사용자가 별도로 금지하지 않았다면 검증된 커밋을 현재 원격 브랜치에 푸시합니다.
+- 사용자가 별도로 금지하지 않았다면 검증된 커밋을 작업 브랜치에 푸시하고 Pull Request를 생성합니다.
 - rebase, reset, force push, 기존 커밋 수정은 명시적 요청 없이는 수행하지 않습니다.
 
-## 9. 완료 조건
+## 10. 완료 조건
 
 다음 항목을 모두 만족해야 작업을 완료로 보고합니다.
 
@@ -154,5 +171,5 @@ npm run build:cloudflare
 - 변경 범위의 테스트와 정적 검사가 통과함
 - 프로덕션 또는 Cloudflare 빌드가 필요한 경우 통과함
 - 관련 없는 변경이나 충돌이 없음
-- 커밋과 푸시 결과가 확인됨
-- 최종 보고에 변경 파일, 검증 결과, 커밋 해시, 남은 위험이 포함됨
+- 작업 Issue, Pull Request, 커밋과 병합 결과가 확인됨
+- 최종 보고에 Issue/PR 링크, 변경 파일, 검증 결과, 커밋 해시, 남은 위험이 포함됨
